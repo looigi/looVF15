@@ -25,6 +25,11 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -87,6 +92,11 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -94,5 +104,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "bb101d00-7c9d-47fa-b8bc-92cf6d1f7b34"
   }
 }

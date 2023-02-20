@@ -1,0 +1,559 @@
+<div #myBoundsMT ngDraggable [handle]="handleMenuMT" *ngIf="mascheraVisibile == true" class="maschera" (edge)="checkEdge($event)" [bounds]="myBoundsMT" [inBounds]="true">
+    <div #handleMenuMT class="drag-block-handle" style="width: 100%; float: left; height: 30px; border-bottom: 1px solid #999;;">
+        <div style="width: calc(100% - 35px); float: left; height: 30px; text-align: left;">
+            <div style="width: 50%; float: left;">
+                <h5>Gestione Immagini</h5>
+            </div>
+            <div style="width: 50%; float: left; word-break: initial; overflow: hidden; height: 30px; text-align: right;">
+                <h5>Categoria: {{ listaSelezionata }}</h5>
+            </div>
+        </div>
+        <div style="width: 35px; float: left; height: 30px; text-align: right; margin-top: -4px;">
+            <img src="assets/immagini/icons/elimina_quadrato.png" style="width: 30px; height: 30px;" (click)="chiudiMaschera()" />
+        </div>
+    </div>
+    <div style="width: 100%; float: left; height: calc(100% - 30px);">
+
+        <div style="width: 100%; height: 30px; float: left; border-bottom: 1px solid #999;">
+            <div style="width: 30px; height: 30px; float: left; text-align: left;">
+                <img src="assets/immagini/icons/icona_INDIETRO.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="indietro()" />
+            </div>
+            <div style="width: calc(100% - 100px); height: 30px; float: left; text-align: center; font-size: 18px; word-break: initial; overflow: hidden; ">
+                <!-- <span *ngIf="ricercaPerStringa == false"> -->
+                    Pagina:&nbsp;
+                    <input type="number" [(ngModel)]="Pagina" style="cursor: pointer; width: 90px; height: 25px;" (blur)="CambiaValorePagina()" >
+                    <span *ngIf="caricamentoInCorso == false" >&nbsp;/&nbsp;{{NumeroPagine}} 
+                    Inizio: {{Inizio}} Fine: {{Inizio+QuanteImmagini}}&nbsp;
+                    Totali: {{righeTotali}}</span>
+                <!-- </span>
+                <span *ngIf="ricercaPerStringa == true">
+                    Elementi rilevati: {{NumeroPagine}}
+                </span> -->
+            </div>
+            <div style="width: 70px; height: 30px; float: left; text-align: right;">
+                <img src="assets/immagini/icons/icona-FILTRO.png" title="Seleziona Tutte" style="cursor: pointer; width: 30px; height: 30px;" (click)="selezionaTutte()" />
+                <img src="assets/immagini/icons/icona_AVANTI.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="avanti()" />
+            </div>
+        </div>        
+                
+        <!-- <div style="width: 100%; float: left; height: 60px; border-right: 1px solid #999;"> -->
+        <div style="width: 200px; float: left; height: calc(100% - 30px); border-right: 1px solid #999; overflow: auto; padding: 10px;">
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; padding: 5px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Exif Descrizione
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerMetodo1 == true" (change)="cambiaRicercaMetodo1($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; padding: 5px; background-color: #c5c581;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Exif Commento
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerMetodo2 == true" (change)="cambiaRicercaHashMetodo2($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; padding: 5px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Data
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerData == true" (change)="cambiaRicercaData($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; border-top: 1px solid #999; background-color: #c5c581; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Dimensioni
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerDimensioni == true" (change)="cambiaRicercaDimensioni($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; border-top: 1px solid #999; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Punti
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerPunti == true" (change)="cambiaRicercaPunti($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 10px; padding-top: 2px; height: 30px;">
+                    Metodo 1
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 15px;">
+                    <input type="checkbox" [checked]="ricercaPerPuntiCornice == true" (change)="cambiaRicercaPuntiCornice($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 5px; padding-top: 2px; height: 30px;">
+                    Metodo 2
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 10px;">
+                    <input type="checkbox" [checked]="ricercaPerPuntiDiagonale == true" (change)="cambiaRicercaPuntiDiagonale($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 5px; padding-top: 2px; height: 30px;">
+                    Metodo 3
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 10px;">
+                    <input type="checkbox" [checked]="ricercaPerPuntiCorpo == true" (change)="cambiaRicercaPuntiCorpo($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 5px; padding-top: 2px; height: 30px;">
+                    Metodo 4
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 10px;">
+                    <input type="checkbox" [checked]="ricercaPerNegativo == true" (change)="cambiaRicercaPerNegativo($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 5px; padding-top: 2px; height: 30px;">
+                    Hash
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 10px;">
+                    <input type="checkbox" [checked]="ricercaPerHash == true" (change)="cambiaRicercaPerHash($event)" />
+                </div>
+                <!-- <div *ngIf="ricercaPerPunti == true" style="width: calc(100% - 70px); float: left; margin-left: 20px; margin-top: 5px; padding-top: 2px; height: 30px;">
+                    Essenziale
+                </div>
+                <div *ngIf="ricercaPerPunti == true" style="width: 30px; float: left; text-align: right; margin-left: 20px; margin-top: 10px;">
+                    <input type="checkbox" [checked]="ricercaPerEssenziale == true" (change)="cambiaRicercaPerEssenziale($event)" />
+                </div> -->
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: auto; border-top: 1px solid #999; background-color: #c5c581; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Nome Uguale
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerNomeUguale == true" (change)="cambiaRicercaNomeUguale($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerNomeUguale==true" style="width: 100%; float: left; text-align: left; margin-top: 10px; white-space: nowrap; overflow: hidden; ">
+                    <div style="width: 50%; float: left; text-align: left; padding-left: 10px;">
+                        Caratteri:
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <input type="number" [(ngModel)]="caratteri" style="width: 100%;" (blur)="SalvaValoreCaratteri()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: auto; border-top: 1px solid #999; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Essenziale
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerEssenziale == true" (change)="cambiaRicercaPerEssenziale($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; border-top: 1px solid #999; background-color: #c5c581; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Peso In Kb.
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerPeso == true" (change)="cambiaRicercaPerPeso($event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; border-top: 1px solid #999; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Stringa
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerStringa == true" (change)="cambiaRicercaPerStringa($event)" />
+                </div>
+                <div *ngIf="ricercaPerStringa == true" style="width: 100%; float: left; text-align: right; margin-top: 5px;">
+                    <input type="text" [(ngModel)]="stringaRicerca" style="width: calc(100% - 25px)" (blur)="entratoCampoStringa()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(true)" />
+                    <img src="assets/immagini/icons/icona-FILTRO.png" title="Lista Ricerche" style="cursor: pointer; width: 25px; height: 25px; margin-top: -4px;" (click)="listaRicercheVisualizzata = true" />
+                </div>
+                <div *ngIf="ricercaPerStringa == true" style="width: 100%; float: left; text-align: right; margin-top: 3px; margin-top: 5px; padding: 5px; height: 30px;">
+                    And&nbsp;&nbsp;&nbsp;<input type="checkbox" [checked]="ricercaAnd == true" (change)="cambiaFiltroStringa(1, $event)" />
+                    &nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" [checked]="ricercaOr == true" (change)="cambiaFiltroStringa(2, $event)" />
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: 30px; background-color: #c5c581; padding: 5px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    1280
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPer1280 == true" (change)="cambiaRicerca1280($event)" />
+                </div>
+            </div>
+
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; border-top: 1px solid #999; padding: 5px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Piccole
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="ricercaPerPiccole == true" (change)="cambiaRicercaPerPiccole($event)" />
+                </div>
+
+                <div *ngIf="ricercaPerPiccole==true" style="width: 100%; float: left; text-align: left; margin-top: 10px; white-space: nowrap; overflow: hidden; ">
+                    <div style="width: 50%; float: left; text-align: left; padding-left: 10px;">
+                        Dimensione in Kb.:
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <input type="number" [(ngModel)]="dimensioneImmaginePP" style="width: 100%;" (blur)="SalvaValoreDimensioniPP()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                    </div>
+                </div>
+                <div *ngIf="ricercaPerPiccole==true" style="width: 100%; float: left; text-align: center; margin-top: -3px; white-space: nowrap; overflow: hidden;">
+                    <div style="width: 50%; float: left; text-align: left; padding-left: 10px;">
+                        Width
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <input type="number" [(ngModel)]="larghezza" style="width: 100%;" (blur)="SalvaValoreLarghezza()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                    </div>
+                </div>
+                <div *ngIf="ricercaPerPiccole==true" style="width: 100%; float: left; text-align: center; margin-top: -3px; white-space: nowrap; overflow: hidden;">
+                    <div style="width: 50%; float: left; text-align: left; padding-left: 10px;">
+                        Height
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <input type="number" [(ngModel)]="altezza" style="width: 100%;" (blur)="SalvaValoreAltezza()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="clear: both;"></div>
+
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; border-top: 1px solid #999; padding: 5px; height: auto;">
+                Ordinamento<br />
+                <div style="width: 100%; text-align: right;">
+                    Solo Nome&nbsp;<input type="radio" value="SoloNome" name="ordinamento" [(ngModel)]="Ordinamento" (click)="cambioOrdinamento()"><br />
+                    Percorso&nbsp;<input type="radio" value="Percorso" name="ordinamento" [(ngModel)]="Ordinamento" (click)="cambioOrdinamento()"><br />
+                    Nome File&nbsp;<input type="radio" value="NomeFile" name="ordinamento" [(ngModel)]="Ordinamento" (click)="cambioOrdinamento()"><br />
+                </div>
+            </div>
+
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; border-top: 1px solid #999; padding: 5px; height: 30px;"
+                [style.background-color]="tutteLeCategorie == true ? '#ff6161' : 'transparent'">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Tutte le categorie
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="tutteLeCategorie == true" (change)="cambiaTutteLeCategorie($event)" />
+                </div>
+            </div>
+
+            <div style="width: 100%; float: left; text-align: left; padding-left: 5px; white-space: nowrap; overflow: hidden;">
+                <div style="width: calc(100% - 50px); float: left;">
+                    Numero Righe<br />Ritornate
+                </div>
+                <div style="width: 50px; float: left; text-align: right; margin-top: 8px;">
+                    <input type="number" [(ngModel)]="QuanteImmagini" style="width: 100%;" (blur)="SalvaValoreRighe()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                </div>
+            </div>
+            <div *ngIf="ricercaPerPiccole==false" style="width: 100%; float: left; text-align: left; padding-left: 5px; margin-top: -3px; white-space: nowrap; overflow: hidden; margin-top: 5px;">
+                <div style="width: calc(100% - 50px); float: left;">
+                    Dimensione<br />Immagini
+                </div>
+                <div style="width: 50px; float: left; text-align: right; margin-top: 8px;">
+                    <input type="number" [(ngModel)]="dimensioneImmagine" style="width: 100%;" (blur)="SalvaValoreDimensioni()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
+                </div>
+            </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; padding: 5px; padding-top: 2px; height: 30px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Visualizza Info:
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="visualizzaInfo == true" (change)="cambiaVisualizzaInfo($event)" />
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; padding: 5px; padding-top: 2px; height: 30px;">
+                <div style="width: calc(100% - 30px); float: left;">
+                    Visualizza Thumb:
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 3px;">
+                    <input type="checkbox" [checked]="visualizzaThumb == true" (change)="cambiaVisualizzaThumb($event)" />
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div style="width: 100%; float: left; text-align: right; white-space: nowrap; overflow: hidden; border-top: 1px solid #999; ">
+                <span *ngIf="ciSonoSelezionate == true" style="margin-bottom: 5px;">
+                    Selezionate: {{quanteSelezionate}}
+                </span>
+                <br *ngIf="ciSonoSelezionate == true" />
+                <img src="assets/immagini/icons/icona_equalizz.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="spostamentoTablet = !spostamentoTablet; salvaSpostamentoTablet();" />
+                <img *ngIf="ciSonoSelezionate == true" src="assets/immagini/icons/icona_MODIFICA-TAG.png" title="Sposta a categoria" style="cursor: pointer; width: 30px; height: 30px;" (click)="spostaImmagineACategoriaTutte()" />
+                <img *ngIf="ciSonoSelezionate == true" src="assets/immagini/icons/icona_AVANTI.png" title="Sposta nelle piccole" style="cursor: pointer; width: 30px; height: 30px;" (click)="spostaImmagineTutte()" />
+                <img *ngIf="ciSonoSelezionate == true" src="assets/immagini/icons/icona_ELIMINA-TAG.png"  title="Elimina" style="cursor: pointer; width: 30px; height: 30px;" (click)="eliminaImmagineTutte()" />
+
+                <img src="assets/immagini/icons/icona_CERCA.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="effettuaRicerca()" />
+            </div>
+        </div>
+                    
+        <!-- Spostamento per tablet -->
+        <div ngDraggable [handle]="titoloSC" *ngIf="spostamentoTablet == true" style="width: 200px; float: left; height: calc(100% - 30px); border-right: 1px solid #999; overflow: auto; padding: 10px;">
+            <div #titoloSC class="drag-block-handle" class="intestazione">Spostamento a categoria</div>
+                <table style="width: 100%;">
+                    <tr style="border-bottom: 1px solid #999;">
+                    <td>
+                        Selezionata
+                    </td>
+                    <td>
+                        {{listaSelezionataPS}}
+                    </td>
+                    </tr>    
+                    <!-- <tr>
+                    <th></th>
+                    <th>
+                        Categoria
+                    </th>
+                    </tr> -->
+                    <tr *ngFor="let categorie of lista" [style.background-color]="categorie.RigaDispari == true ? '#efef92' : '#d1d164'">
+                    <td>
+                        <img *ngIf="categorie.RigaDispari == true" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
+                        <span  *ngIf="categorie.RigaDispari == false">{{categorie.NomeLista}}</span>
+                    </td>
+                    <td>
+                        <img *ngIf="categorie.RigaDispari == false" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
+                        <span  *ngIf="categorie.RigaDispari == true">{{categorie.NomeLista}}</span>
+                    </td>
+                    </tr>
+                    <!-- <tr style="border-top: 1px solid #999;">
+                    <td>
+                
+                    </td>
+                    <td style="text-align: right;">
+                        <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="chiudiSpostamentoTablet()" />
+                    </td>
+                    </tr> -->
+                </table>
+            </div>
+            <!-- Spostamento per tablet -->
+
+            <!-- <div style="width: 35px; float: left; height: 30px; text-align: right; margin-top: 7px;">
+                <img src="assets/immagini/icons/icona_CERCA.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="effettuaRicerca()" />
+            </div> -->
+        <!-- </div> -->
+
+        <div #divScroll id="divScroll" style="height: calc(100% - 30px); float: left; overflow: auto; border: 1 px solid red;"
+            [style.width]="spostamentoTablet ? 'calc(100% - 400px)'  : 'calc(100% - 200px)' ">
+            <div *ngIf="ricercaImpostata" style="width: 100%; height: auto; margin-bottom: 5px;">
+                <h5>Ricerca per  {{ nomeRicerca }}</h5>
+                <table *ngFor="let r of ricercaImpostata" style="width: 100%;">
+                    <tr>
+                        <td>
+                            <table style="width: 100%; background-color: #c0c381;">
+                                <tr>
+                                    <td style="text-align:center; font-size: 16px; font-weight: bold; border-bottom: 1px solid #999;">
+                                        Settore {{r.Settore}} - {{nomeRicerca}}: {{ r.Ricerca }}
+                                    </td> 
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%;">
+                                <tr style="border-bottom: 1px solid #999;">
+                                    <td>
+                                        <div *ngFor="let rr of r.Values; let i = index;">
+                                            <div *ngIf="rr.Eliminata == false && rr.Spostata == false && rr.SpostataACategoria == false" 
+                                                class="immagine"
+                                                [style.width.px]="dimensioneImmagine"
+                                                [style.height.px]="dimensioneImmagine"
+                                            >
+                                                <div style="width: calc(100% - 30px); height: 100%; float: left;">
+                                                    <div style = "border: 1px solid black; width: 100%; height: 22px; float: left; overflow: hidden; text-align: center; border-radius: 3px; background-color: #8c8f6c; color: white;">
+                                                        <span title="{{rr.NomeFile}}">{{ rr.NomeFileCorto }}</span>
+                                                    </div>                                          
+                                                    <!-- <div style="clear: both;"></div> -->
+
+                                                    <div style="width: 100%; height: calc(100% - 22px); float: left;">
+                                                        <div *ngIf="visualizzaInfo == true && rr.Eliminata == false && rr.Spostata == false && rr.SpostataACategoria == false" 
+                                                            style="float: left; overflow: auto; height: 100%; width: 50%;">
+                                                            <span title="{{rr.Cartella}}">Cartella: {{ rr.CartellaCorta }}</span><br />
+                                                            <span title="{{rr.NomeFile}}">Nome File: {{ rr.NomeFileCorto }}</span><br />
+                                                            Dimensioni: {{ rr.Width }} x {{ rr.Height }}<br />
+                                                            Data: {{ rr.DataOra }}<br />
+                                                            Id: {{ rr.idMultimedia }}<br />
+                                                            <!-- Punti Diagonale: {{ rr.PuntiDiagonale }}<br />
+                                                            Punti Cornice: {{ rr.PuntiCornice }}<br /> -->
+                                                            Preferito: {{ rr.Preferito }} / {{ rr.PreferitoProt }}<br />
+                                                            Protetto: {{ rr.Protetto }}<br />
+                                                            Peso: {{ rr.Dimensioni }}<br />
+                                                            <!-- Path Immagini: {{ pathImmagine[rr.NumeroImmagine] }} -->
+                                                            <!-- Selezionata: <input type="checkbox" [checked]="rr.Selezionata == true" (change)="cambiaSelezionata(rr)" /> -->
+                                                        </div>
+                                                        
+                                                        <div *ngIf="rr.Eliminata == false && rr.Spostata == false && rr.SpostataACategoria == false" 
+                                                            style="float: left; text-align: center; height: 100%; overflow: hidden;" 
+                                                            [style.width]="visualizzaInfo == true && rr.Eliminata == false && rr.Spostata == false && rr.SpostataACategoria == false ? '50%' : '100%'"
+                                                            [style.padding-top.px]="((dimensioneImmagine - 22) - rr.dimeY) / 2"
+                                                        >
+                                                            <img 
+                                                                [src]="rr.PathCompleto" 
+                                                                style="border: 1px solid #999;" 
+                                                                [style.width.px]="rr.dimeX" 
+                                                                [style.height.px]="rr.dimeY"
+                                                                (click)="visualizzaImmagine(rr)" 
+                                                            />
+                                                        </div>
+
+                                                        <div style="clear: both;"></div>
+                                                    </div>
+                                                    <!-- <div style="clear: both;"></div> -->                                                
+                                                </div>
+
+                                                <div style="width: 30px; height: calc(100% + 7px); float: left; overflow: hidden; 
+                                                    border-left: 1px solid #999; padding-top: 7px; margin-top: -3px; background-color: #8f9179;">
+                                                    <!-- <div style="width: calc(100% - 150px); float: left; padding-left: 6px; height: 100%; margin-top: 8px; text-align: left;" (click)="cambiaSelezionata(rr)"> -->
+                                                        <input type="checkbox" [checked]="rr.Selezionata == true" style="margin-left: 8px;" (click)="cambiaSelezionata(rr)" />
+                                                    <!-- </div> -->
+                                                    <!-- <div style="width: calc(100% - 130px); float: left; margin-top: 6px; white-space: nowrap; overflow: hidden;">
+                                                    </div>
+                                                    <div style="width: 150px; float: left; text-align: right;"> -->
+                                                        <img *ngIf="rr.Preferito == false && rr.PreferitoProt == false" src="assets/immagini/icons/preferito_vuoto.png" class="immagini" style="cursor: pointer; z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(rr)" />
+                                                        <img *ngIf="rr.Preferito == true || rr.PreferitoProt == true" src="assets/immagini/icons/preferito.png" class="immagini" style="cursor: pointer; z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(rr)" />
+                                                
+                                                        <img *ngIf="rr.SpostataACategoria == false" src="assets/immagini/icons/icona_MODIFICA-TAG.png" class="immagini" style="cursor: pointer; z-index: 1600; margin-right: 5px;" (click)="spostaImmagineACategoria(rr)" />
+                                                        <img *ngIf="rr.Spostata == false" src="assets/immagini/icons/icona_AVANTI.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="spostaImmagine(rr)" />
+                                                        <img src="assets/immagini/icons/icona_ELIMINA-TAG.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="eliminaImmagine(rr)" />
+                                                    <!-- </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <hr *ngIf="ricercaImpostata" />
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="caricamentoInCorso == true" class="oscura">
+    <img src="assets/immagini/icons/please_wait.gif" style="position: absolute; left: 40%; top: 40%; width: 20%; height: 20%; z-index: 2002;" />
+</div>
+
+<div *ngIf="immagineVisualizzata == true" class="immagineVisualizzata">
+    <img 
+        style="border: 1px solid #999; width: 100%; height: 100%; background-size: contain; background-repeat: no-repeat; background-position: center; float: left;"
+        [ngStyle]="{ 'background-image': 'url(\'' + immaginePath + '\')'}"
+    />
+
+    <img src="assets/immagini/icons/elimina_quadrato.png" style="position: absolute; top: 0px; right: 5px; width: 30px; height: 30px;" (click)="immagineVisualizzata = false" />
+</div>
+
+<div ngDraggable [handle]="titoloES" *ngIf="popupEliminaSposta == true" class="popupEliminaSposta">
+    <div #titoloES class="drag-block-handle" class="intestazione" style="background-color: #91594e;">Operazione in corso</div>
+    <h5>{{ testoEliminaSposta }}</h5>
+    <h5 *ngIf="inPausa == true">*** IN PAUSA ***</h5>
+    <hr />
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 50%; text-align: center;">
+                <img src="assets/immagini/icons/icona_PLAY.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="metteToglieInPausa()" />
+            </td>
+            <td style="width: 50%; text-align: center;">
+                <img src="assets/immagini/icons/elimina_quadrato.png" style="cursor: pointer; width: 30px; height: 30px;" (click)="esciDallaElaborazione()" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Spostamento a categoria -->
+<div *ngIf="spostaACategoria == true" class="oscura" style="z-index: 2005;"></div>
+<div ngDraggable [handle]="titoloSC" *ngIf="spostaACategoria == true" class="creazioneCategoria">
+    <div #titoloSC class="drag-block-handle" class="intestazione">Spostamento a categoria</div>
+    <table style="width: 100%;">
+        <tr style="border-bottom: 1px solid #999;">
+        <td>
+            Tipologia
+        </td>
+        <td>
+            <select style="width: 100%;" (click)="modificataComboImmaginiPS($event)">
+                <option *ngFor="let listina of listaCategorie2" 
+                    [value]="listina.NomeLista" 
+                    [attr.selected]="listaSelezionataPS==listina.NomeLista ? true : null">
+                    {{listina.NomeLista}}
+                </option>
+            </select>          
+        </td>
+        </tr>
+        <tr style="border-bottom: 1px solid #999;">
+            <td>
+                Selezionata
+            </td>
+            <td>
+                {{listaSelezionataPS}}
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; text-align: center;">
+                <img src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" (click)="ControllaSpostamentoACategoria()" />
+            </td>
+            <td style="width: 50%; text-align: center;">
+                <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="spostaACategoria = false" />
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- Spostamento a categoria -->
+
+<!-- Ricerche -->
+<div ngDraggable [handle]="titoloRicerche" *ngIf="listaRicercheVisualizzata" class="listaRicerche">
+    <div #titoloRicerche class="drag-block-handle" class="intestazione">Ricerche Salvate</div>
+    <table style="width: 100%;">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+                Testo
+            </th>
+            <th>
+                And / Or
+            </th>
+            <th>
+                Pagina
+            </th>
+            <th>
+                Dim. Thumbs
+            </th>
+            <th>
+                Righe
+            </th>
+        </tr>
+        <tr *ngFor="let ricerca of ricercheCaricate">
+            <td>
+                <img src="assets/immagini/icons/icona_AVANTI.png" title="Salva" class="immagini" style="width: 25px; height: 25px;" (click)="selezionaRicerca(ricerca)" />
+            </td>      
+            <td>
+                <img src="assets/immagini/icons/icona_ELIMINA-TAG.png" title="Salva" class="immagini" style="width: 25px; height: 25px;" (click)="eliminaRicerca(ricerca)" />
+            </td>      
+            <td>
+                {{ricerca.Ricerca}}
+            </td>
+            <td>
+                <span *ngIf="ricerca.AndOr == 1">And</span>
+                <span *ngIf="ricerca.AndOr == 2">Or</span>
+            </td>
+            <td>
+                {{ricerca.Pagina}}
+            </td>
+            <th>
+                {{ricerca.DimeThumbs}}
+            </th>
+            <th>
+                {{ricerca.NumeroRighe}}
+            </th>
+        </tr>
+        <tr>
+            <td colspan="5">
+      
+            </td>
+            <td style="text-align: right;">
+              <img src="assets/immagini/icons/elimina_quadrato.png" title="Chiude maschera" class="immagini" (click)="listaRicercheVisualizzata = false" />
+            </td>
+          </tr>  
+    
+    </table>
+</div>
+<!-- Ricerche -->

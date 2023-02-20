@@ -1,483 +1,1231 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<style>
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 8px 0;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .spacer {
-    flex: 1;
-  }
-
-  .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
-  }
-
-  .toolbar img {
-    margin: 0 16px;
-  }
-
-  .toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 8px;
-  }
-
-  .toolbar #youtube-logo {
-    height: 40px;
-    margin: 0 16px;
-  }
-
-  .toolbar #twitter-logo:hover,
-  .toolbar #youtube-logo:hover {
-    opacity: 0.8;
-  }
-
-  .content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  svg.material-icons {
-    height: 24px;
-    width: auto;
-  }
-
-  svg.material-icons:not(:last-child) {
-    margin-right: 8px;
-  }
-
-  .card svg.material-icons path {
-    fill: #888;
-  }
-
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 16px;
-  }
-
-  .card {
-    all: unset;
-    border-radius: 4px;
-    border: 1px solid #eee;
-    background-color: #fafafa;
-    height: 40px;
-    width: 200px;
-    margin: 0 8px 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease-in-out;
-    line-height: 24px;
-  }
-
-  .card-container .card:not(:last-child) {
-    margin-right: 0;
-  }
-
-  .card.card-small {
-    height: 16px;
-    width: 168px;
-  }
-
-  .card-container .card:not(.highlight-card) {
-    cursor: pointer;
-  }
-
-  .card-container .card:not(.highlight-card):hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
-  }
-
-  .card-container .card:not(.highlight-card):hover .material-icons path {
-    fill: rgb(105, 103, 103);
-  }
-
-  .card.highlight-card {
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
-    border: none;
-    width: auto;
-    min-width: 30%;
-    position: relative;
-  }
-
-  .card.card.highlight-card span {
-    margin-left: 60px;
-  }
-
-  svg#rocket {
-    width: 80px;
-    position: absolute;
-    left: -10px;
-    top: -24px;
-  }
-
-  svg#rocket-smoke {
-    height: calc(100vh - 95px);
-    position: absolute;
-    top: 10px;
-    right: 180px;
-    z-index: -10;
-  }
-
-  a,
-  a:visited,
-  a:hover {
-    color: #1976d2;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #125699;
-  }
-
-  .terminal {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 6px;
-    padding-top: 45px;
-    margin-top: 8px;
-    overflow: hidden;
-    background-color: rgb(15, 15, 16);
-  }
-
-  .terminal::before {
-    content: "\2022 \2022 \2022";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: rgb(58, 58, 58);
-    color: #c2c3c4;
-    width: 100%;
-    font-size: 2rem;
-    line-height: 0;
-    padding: 14px 0;
-    text-indent: 4px;
-  }
-
-  .terminal pre {
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    color: white;
-    padding: 0 1rem 1rem;
-    margin: 0;
-  }
-
-  .circle-link {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
-    margin: 8px;
-    background-color: white;
-    border: 1px solid #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: 1s ease-out;
-  }
-
-  .circle-link:hover {
-    transform: translateY(-0.25rem);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-  }
-
-  footer a {
-    display: flex;
-    align-items: center;
-  }
-
-  .github-star-badge {
-    color: #24292e;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    padding: 3px 10px;
-    border: 1px solid rgba(27,31,35,.2);
-    border-radius: 3px;
-    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
-    margin-left: 4px;
-    font-weight: 600;
-  }
-
-  .github-star-badge:hover {
-    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
-    border-color: rgba(27,31,35,.35);
-    background-position: -.5em;
-  }
-
-  .github-star-badge .material-icons {
-    height: 16px;
-    width: 16px;
-    margin-right: 4px;
-  }
-
-  svg#clouds {
-    position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
-  }
-
-  /* Responsive Styles */
-  @media screen and (max-width: 767px) {
-    .card-container > *:not(.circle-link) ,
-    .terminal {
-      width: 100%;
-    }
-
-    .card:not(.highlight-card) {
-      height: 16px;
-      margin: 8px 0;
-    }
-
-    .card.highlight-card span {
-      margin-left: 72px;
-    }
-
-    svg#rocket-smoke {
-      right: 120px;
-      transform: rotate(-5deg);
-    }
-  }
-
-  @media screen and (max-width: 575px) {
-    svg#rocket-smoke {
-      display: none;
-      visibility: hidden;
-    }
-  }
-</style>
-
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <img
-    width="40"
-    alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-  />
-  <span>Welcome</span>
-    <div class="spacer"></div>
-    <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
-      <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-        <rect width="400" height="400" fill="none"/>
-        <path d="M153.62,301.59c94.34,0,145.94-78.16,145.94-145.94,0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,325,122.47a102.38,102.38,0,0,1-29.46,8.07,51.47,51.47,0,0,0,22.55-28.37,102.79,102.79,0,0,1-32.57,12.45,51.34,51.34,0,0,0-87.41,46.78A145.62,145.62,0,0,1,92.4,107.81a51.33,51.33,0,0,0,15.88,68.47A50.91,50.91,0,0,1,85,169.86c0,.21,0,.43,0,.65a51.31,51.31,0,0,0,41.15,50.28,51.21,51.21,0,0,1-23.16.88,51.35,51.35,0,0,0,47.92,35.62,102.92,102.92,0,0,1-63.7,22A104.41,104.41,0,0,1,75,278.55a145.21,145.21,0,0,0,78.62,23" fill="#fff"/>
-      </svg>
-    </a>
-    <a aria-label="Angular on YouTube" target="_blank" rel="noopener" href="https://youtube.com/angular" title="YouTube">
-      <svg id="youtube-logo" height="24" width="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
-        <path d="M0 0h24v24H0V0z" fill="none"/>
-        <path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/>
-      </svg>
-    </a>
+<div *ngIf="visibileMM == false" class="tuttoNero">
+  
 </div>
 
-<div class="content" role="main">
+<div *ngIf="caricamentoInCorsoI == true" class="attesaComunicazione" 
+  style="left: 0px;">
+  <img src="assets/immagini/icons/please_wait.gif" class="iconaAttesa" />
+</div>
 
-  <!-- Highlight Card -->
-  <div class="card highlight-card card-small">
+<div *ngIf="caricamentoInCorsoV == true" class="attesaComunicazione" 
+  [style.left]="modalitaDoppia == true ? '50%' : '0px'">
+  <img src="assets/immagini/icons/please_wait.gif" class="iconaAttesa" />
+</div>
 
-    <svg id="rocket" xmlns="http://www.w3.org/2000/svg" width="101.678" height="101.678" viewBox="0 0 101.678 101.678">
-      <title>Rocket Ship</title>
-      <g id="Group_83" data-name="Group 83" transform="translate(-141 -696)">
-        <circle id="Ellipse_8" data-name="Ellipse 8" cx="50.839" cy="50.839" r="50.839" transform="translate(141 696)" fill="#dd0031"/>
-        <g id="Group_47" data-name="Group 47" transform="translate(165.185 720.185)">
-          <path id="Path_33" data-name="Path 33" d="M3.4,42.615a3.084,3.084,0,0,0,3.553,3.553,21.419,21.419,0,0,0,12.215-6.107L9.511,30.4A21.419,21.419,0,0,0,3.4,42.615Z" transform="translate(0.371 3.363)" fill="#fff"/>
-          <path id="Path_34" data-name="Path 34" d="M53.3,3.221A3.09,3.09,0,0,0,50.081,0,48.227,48.227,0,0,0,18.322,13.437c-6-1.666-14.991-1.221-18.322,7.218A33.892,33.892,0,0,1,9.439,25.1l-.333.666a3.013,3.013,0,0,0,.555,3.553L23.985,43.641a2.9,2.9,0,0,0,3.553.555l.666-.333A33.892,33.892,0,0,1,32.647,53.3c8.55-3.664,8.884-12.326,7.218-18.322A48.227,48.227,0,0,0,53.3,3.221ZM34.424,9.772a6.439,6.439,0,1,1,9.106,9.106,6.368,6.368,0,0,1-9.106,0A6.467,6.467,0,0,1,34.424,9.772Z" transform="translate(0 0.005)" fill="#fff"/>
-        </g>
-      </g>
-    </svg>
+<div *ngIf="menuCellulare == false" class="hamburger">
+  <img src="assets/immagini/icons/hamburger.png" style="cursor: pointer; width: 100%; height: 100%" (click)="menuCellulare = !menuCellulare" />
+</div>
 
-    <span>{{ title }} app is running!</span>
+<!-- MENU -->
+<div *ngIf="menuCellulare == true" class="menuCellulare">
+  <div class="riga">
+    <!-- <div style="width: 50%; float: left; word-break: initial; ">
+      Modalità doppia
+    </div>
+    <div style="width: 50%; float: left; word-break: initial; ">
+      <input type="checkbox" [checked]="modalitaDoppia == true" (change)="cambiaModalitaDoppia($event)" /> &nbsp;
+    </div>
+    <div *ngIf="ceCordova == false" class="pulisci"></div> -->
 
-    <svg id="rocket-smoke" xmlns="http://www.w3.org/2000/svg" width="516.119" height="1083.632" viewBox="0 0 516.119 1083.632">
-      <title>Rocket Ship Smoke</title>
-      <path id="Path_40" data-name="Path 40" d="M644.6,141S143.02,215.537,147.049,870.207s342.774,201.755,342.774,201.755S404.659,847.213,388.815,762.2c-27.116-145.51-11.551-384.124,271.9-609.1C671.15,139.365,644.6,141,644.6,141Z" transform="translate(-147.025 -140.939)" fill="#f5f5f5"/>
-    </svg>
+    <div *ngIf="modalitaDoppia == false" style="width: 50%; float: left; word-break: initial; ">
+      Immagini <input type="radio" value="Immagini" [disabled]="refreshInCorso == true ? true : null" name="gender" [(ngModel)]="Tipologia" (click)="cambiaLista('Immagini')">
+    </div>
+    <div *ngIf="modalitaDoppia == false" style="width: 50%; float: left; word-break: initial; ">
+      Video <input type="radio" value="Video" [disabled]="refreshInCorso == true ? true : null" name="gender" [(ngModel)]="Tipologia" (click)="cambiaLista('Video')">
+    </div>
+    <div class="pulisci"></div>
 
-  </div>
+    <div style="width: calc(40% - 5px); padding: 5px; float: left; word-break: initial; background-color: #a0cbb4;">
+      Lista<span *ngIf="modalitaDoppia == true">Immagini</span>
+    </div>
+    <div style="width: calc(60% - 5px); padding: 5px; float: left; word-break: initial; background-color: #a0cbb4; height: 34px;"
+    >
+      <select [(ngModel)]="listaSelezionata" [disabled]="refreshInCorso == true ? true : null" style="width: 100%;" (change)="cambiataLista()" (click)="modificataComboImmagini()">
+        <option *ngFor="let listina of listaOrdinata" 
+          [value]="listina.NomeLista" 
+          [attr.selected]="listaSelezionata==listina.NomeLista ? true : null">
+          {{listina.NomeLista}}
+        </option>
+      </select>        
+    </div>
+    <div class="pulisci"></div>
 
-  <!-- Resources -->
-  <h2>Resources</h2>
-  <p>Here are some links to help you get started:</p>
+    <div *ngIf="modalitaDoppia == true" style="width: calc(40% - 5px); padding: 5px;  float: left; word-break: initial; background-color: #8b9f93;">
+      Lista Video
+    </div>
+    <div *ngIf="modalitaDoppia == true" style="width: calc(60% - 5px); padding: 5px;  float: left; word-break: initial; background-color: #8b9f93; height: 34px;"
+    >
+      <select [(ngModel)]="listaSelezionataVideo" [disabled]="refreshInCorso == true ? true : null" style="width: 100%;" (change)="cambiataLista()" (click)="modificataComboVideo()">
+        <option *ngFor="let lista of listaVideo" 
+          [value]="lista.NomeLista" 
+          [attr.selected]="listaSelezionataVideo==lista.NomeLista ? true : null">
+          {{lista.NomeLista}}
+        </option>
+      </select>        
+    </div>
+    <div *ngIf="modalitaDoppia == true" class="pulisci"></div>
 
-  <div class="card-container">
-    <a class="card" target="_blank" rel="noopener" href="https://angular.io/tutorial">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-      <span>Learn Angular</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>    </a>
+    <div *ngIf="modalitaDoppia == true || Tipologia == 'Immagini'">
+      <!-- <div style="width: 40%; float: left;">
+        Files: {{quantiFiles}}
+      </div>
+      <div style="width: 60%; float: left;"> -->
+        <span style="width: calc(100% - 30px); display: block; float: left;">Random Immagini</span><input type="checkbox" [(ngModel)]="modalitaRandomI" style="width: 30px" (click)="impostaRandomI($event)" />
+      <!-- </div>-->
+    </div>
+    <div class="pulisci"></div>
 
-    <a class="card" target="_blank" rel="noopener" href="https://angular.io/cli">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-      <span>CLI Documentation</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    </a>
+    <div *ngIf="modalitaDoppia == true || Tipologia != 'Immagini'">
+      <!-- <div style="width: 40%; float: left;">
+        Files: {{quantiFiles}}
+      </div>
+      <div style="width: 60%; float: left;"> -->
+        <span style="width: calc(100% - 30px); display: block; float: left;">Random Video</span><input type="checkbox" [(ngModel)]="modalitaRandomV" style="width: 30px" (click)="impostaRandomV($event)" />
+      <!-- </div>-->
+    </div>
+    <div class="pulisci"></div>
 
-    <a class="card" target="_blank" rel="noopener" href="https://material.angular.io">
-      <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px" width="21.813" height="23.453" viewBox="0 0 179.2 192.7"><path fill="#ffa726" d="M89.4 0 0 32l13.5 118.4 75.9 42.3 76-42.3L179.2 32 89.4 0z"/><path fill="#fb8c00" d="M89.4 0v192.7l76-42.3L179.2 32 89.4 0z"/><path fill="#ffe0b2" d="m102.9 146.3-63.3-30.5 36.3-22.4 63.7 30.6-36.7 22.3z"/><path fill="#fff3e0" d="M102.9 122.8 39.6 92.2l36.3-22.3 63.7 30.6-36.7 22.3z"/><path fill="#fff" d="M102.9 99.3 39.6 68.7l36.3-22.4 63.7 30.6-36.7 22.4z"/></svg>
-      <span>Angular Material</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    </a>
-
-    <a class="card" target="_blank" rel="noopener" href="https://blog.angular.io/">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
-      <span>Angular Blog</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    </a>
-
-    <a class="card" target="_blank" rel="noopener" href="https://angular.io/devtools/">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M14.73,13.31C15.52,12.24,16,10.93,16,9.5C16,5.91,13.09,3,9.5,3S3,5.91,3,9.5C3,13.09,5.91,16,9.5,16 c1.43,0,2.74-0.48,3.81-1.27L19.59,21L21,19.59L14.73,13.31z M9.5,14C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5S14,7.01,14,9.5 S11.99,14,9.5,14z"/><polygon points="10.29,8.44 9.5,6 8.71,8.44 6.25,8.44 8.26,10.03 7.49,12.5 9.5,10.97 11.51,12.5 10.74,10.03 12.75,8.44"/></g></g></svg>
-      <span>Angular DevTools</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    </a>
-
-  </div>
-
-  <!-- Next Steps -->
-  <h2>Next Steps</h2>
-  <p>What do you want to do next with your app?</p>
-
-  <input type="hidden" #selection>
-
-  <div class="card-container">
-    <button class="card card-small" (click)="selection.value = 'component'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>New Component</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'material'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Angular Material</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'pwa'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Add PWA Support</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Add Dependency</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'test'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Run and Watch Tests</span>
-    </button>
-
-    <button class="card card-small" (click)="selection.value = 'build'" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <span>Build for Production</span>
-    </button>
-  </div>
-
-  <!-- Terminal -->
-  <div class="terminal" [ngSwitch]="selection.value">
-      <pre *ngSwitchDefault>ng generate component xyz</pre>
-      <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
-      <pre *ngSwitchCase="'pwa'">ng add @angular/pwa</pre>
-      <pre *ngSwitchCase="'dependency'">ng add _____</pre>
-      <pre *ngSwitchCase="'test'">ng test</pre>
-      <pre *ngSwitchCase="'build'">ng build</pre>
-  </div>
-
-  <!-- Links -->
-  <div class="card-container">
-    <a class="circle-link" title="Find a Local Meetup" href="https://www.meetup.com/find/?keywords=angular" target="_blank" rel="noopener">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24.607" height="23.447" viewBox="0 0 24.607 23.447">
-        <title>Meetup Logo</title>
-        <path id="logo--mSwarm" d="M21.221,14.95A4.393,4.393,0,0,1,17.6,19.281a4.452,4.452,0,0,1-.8.069c-.09,0-.125.035-.154.117a2.939,2.939,0,0,1-2.506,2.091,2.868,2.868,0,0,1-2.248-.624.168.168,0,0,0-.245-.005,3.926,3.926,0,0,1-2.589.741,4.015,4.015,0,0,1-3.7-3.347,2.7,2.7,0,0,1-.043-.38c0-.106-.042-.146-.143-.166a3.524,3.524,0,0,1-1.516-.69A3.623,3.623,0,0,1,2.23,14.557a3.66,3.66,0,0,1,1.077-3.085.138.138,0,0,0,.026-.2,3.348,3.348,0,0,1-.451-1.821,3.46,3.46,0,0,1,2.749-3.28.44.44,0,0,0,.355-.281,5.072,5.072,0,0,1,3.863-3,5.028,5.028,0,0,1,3.555.666.31.31,0,0,0,.271.03A4.5,4.5,0,0,1,18.3,4.7a4.4,4.4,0,0,1,1.334,2.751,3.658,3.658,0,0,1,.022.706.131.131,0,0,0,.1.157,2.432,2.432,0,0,1,1.574,1.645,2.464,2.464,0,0,1-.7,2.616c-.065.064-.051.1-.014.166A4.321,4.321,0,0,1,21.221,14.95ZM13.4,14.607a2.09,2.09,0,0,0,1.409,1.982,4.7,4.7,0,0,0,1.275.221,1.807,1.807,0,0,0,.9-.151.542.542,0,0,0,.321-.545.558.558,0,0,0-.359-.534,1.2,1.2,0,0,0-.254-.078c-.262-.047-.526-.086-.787-.138a.674.674,0,0,1-.617-.75,3.394,3.394,0,0,1,.218-1.109c.217-.658.509-1.286.79-1.918a15.609,15.609,0,0,0,.745-1.86,1.95,1.95,0,0,0,.06-1.073,1.286,1.286,0,0,0-1.051-1.033,1.977,1.977,0,0,0-1.521.2.339.339,0,0,1-.446-.042c-.1-.092-.2-.189-.307-.284a1.214,1.214,0,0,0-1.643-.061,7.563,7.563,0,0,1-.614.512A.588.588,0,0,1,10.883,8c-.215-.115-.437-.215-.659-.316a2.153,2.153,0,0,0-.695-.248A2.091,2.091,0,0,0,7.541,8.562a9.915,9.915,0,0,0-.405.986c-.559,1.545-1.015,3.123-1.487,4.7a1.528,1.528,0,0,0,.634,1.777,1.755,1.755,0,0,0,1.5.211,1.35,1.35,0,0,0,.824-.858c.543-1.281,1.032-2.584,1.55-3.875.142-.355.28-.712.432-1.064a.548.548,0,0,1,.851-.24.622.622,0,0,1,.185.539,2.161,2.161,0,0,1-.181.621c-.337.852-.68,1.7-1.018,2.552a2.564,2.564,0,0,0-.173.528.624.624,0,0,0,.333.71,1.073,1.073,0,0,0,.814.034,1.22,1.22,0,0,0,.657-.655q.758-1.488,1.511-2.978.35-.687.709-1.37a1.073,1.073,0,0,1,.357-.434.43.43,0,0,1,.463-.016.373.373,0,0,1,.153.387.7.7,0,0,1-.057.236c-.065.157-.127.316-.2.469-.42.883-.846,1.763-1.262,2.648A2.463,2.463,0,0,0,13.4,14.607Zm5.888,6.508a1.09,1.09,0,0,0-2.179.006,1.09,1.09,0,0,0,2.179-.006ZM1.028,12.139a1.038,1.038,0,1,0,.01-2.075,1.038,1.038,0,0,0-.01,2.075ZM13.782.528a1.027,1.027,0,1,0-.011,2.055A1.027,1.027,0,0,0,13.782.528ZM22.21,6.95a.882.882,0,0,0-1.763.011A.882.882,0,0,0,22.21,6.95ZM4.153,4.439a.785.785,0,1,0,.787-.78A.766.766,0,0,0,4.153,4.439Zm8.221,18.22a.676.676,0,1,0-.677.666A.671.671,0,0,0,12.374,22.658ZM22.872,12.2a.674.674,0,0,0-.665.665.656.656,0,0,0,.655.643.634.634,0,0,0,.655-.644A.654.654,0,0,0,22.872,12.2ZM7.171-.123A.546.546,0,0,0,6.613.43a.553.553,0,1,0,1.106,0A.539.539,0,0,0,7.171-.123ZM24.119,9.234a.507.507,0,0,0-.493.488.494.494,0,0,0,.494.494.48.48,0,0,0,.487-.483A.491.491,0,0,0,24.119,9.234Zm-19.454,9.7a.5.5,0,0,0-.488-.488.491.491,0,0,0-.487.5.483.483,0,0,0,.491.479A.49.49,0,0,0,4.665,18.936Z" transform="translate(0 0.123)" fill="#f64060"/>
-      </svg>
-    </a>
-
-    <a class="circle-link" title="Join the Conversation on Discord" href="https://discord.gg/angular" target="_blank" rel="noopener">
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 245 240">
-        <title>Discord Logo</title>
-        <path d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/>
-        <path d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/>
-      </svg>
-    </a>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-      Love Angular?&nbsp;
-      <a href="https://github.com/angular/angular" target="_blank" rel="noopener"> Give our repo a star.
-        <div class="github-star-badge">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          Star
+    <div *ngIf="listaIDSelezionata !== ''" style="width: 100%;">
+      <div style="width: 40%; float: left;">
+        Lista ID Selezionata:
+      </div>
+      <div style="width: 60%; float: left; background-color: #a0cbb4;">
+        <div style="width: calc(100% - 30px); float: left;">
+          {{listaIDSelezionata}}
         </div>
-      </a>
-      <a href="https://github.com/angular/angular" target="_blank" rel="noopener">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-  </footer>
+        <div style="width: 30px; float: left; text-align: right;;">
+          <img src="assets/immagini/icons/icona_REFRESH.png" style="cursor: pointer; width: 25px; height: 25px" (click)="modificaIDMultimedia(idTipologiaPerSceltaID, IDSelezionato, listaIDSelezionata, -1, false)" />
+        </div>
+      </div>
+    </div>
 
-  <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
-    <title>Gray Clouds Background</title>
-    <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
-  </svg>
+    <div *ngIf="(modalitaDoppia == true || Tipologia == 'Immagini') && listaSelezionata && listaSelezionata.indexOf('Preferiti') == -1 && listaSelezionata.indexOf('Tutto') == -1">
+      <div style="width: 40%; float: left;">
+        Immagine Attuale:
+      </div>
+      <div style="width: calc(60% - 90px); float: left;">
+        <input type="number" [(ngModel)]="multimediaAttualeI" style="width: 50%" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)"><span style="width: 50%;">&nbsp;/&nbsp;{{quantiFilesI}}</span>
+      </div>
+      <div style="width: 90px; float: left;">
+        <img src="assets/immagini/icons/icona-NASCONDE.png" title="Carica ID" class="immagini" (click)="aprePopupID(1)" />
+        <img src="assets/immagini/icons/icona_SALVA.png" title="Salva ID" class="immagini" (click)="modificaIDMultimedia(1, '', '', multimediaAttualeI, true)" />
+        <img src="assets/immagini/icons/icona_PLAY.png" title="Imposta ID" class="immagini" (click)="caricaMultimediaID(1)" />
+      </div>
+    </div>
+    <div class="pulisci"></div>
 
+    <div *ngIf="(modalitaDoppia == true || Tipologia != 'Immagini') && listaSelezionataVideo && listaSelezionataVideo.indexOf('Preferiti') == -1 && listaSelezionataVideo.indexOf('Tutto') == -1">
+      <div style="width: 40%; float: left;">
+        Video Attuale:
+      </div>
+      <div style="width: calc(60% - 90px); float: left;">
+        <input type="number" [(ngModel)]="multimediaAttualeV" style="width: 50%" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >&nbsp;/&nbsp;{{quantiFilesV}}
+      </div>
+      <div style="width: 90px; float: left;">
+        <img src="assets/immagini/icons/icona-NASCONDE.png" title="Carica ID" class="immagini" (click)="aprePopupID(2)" />
+        <img src="assets/immagini/icons/icona_SALVA.png" title="Salva ID" class="immagini" (click)="modificaIDMultimedia(2, '', '', multimediaAttualeV, true)" />
+        <img src="assets/immagini/icons/icona_PLAY.png" title="Imposta ID" class="immagini" (click)="caricaMultimediaID(2)" />
+      </div>
+    </div>
+    <div class="pulisci"></div>
+
+    <!-- <div *ngIf="modalitaDoppia == false" style="width: 50%; float: left; margin-top: 2px; word-break: initial; ">
+      Refresh Archivio
+    </div>
+    <div *ngIf="modalitaDoppia == false" style="width: 50%; float: left; text-align: right; word-break: initial; ">
+      <img src="assets/immagini/icons/icona_REFRESH.png" class="immagini" (click)="refreshArchivio()" />
+    </div>
+    <div *ngIf="modalitaDoppia == false" class="pulisci"></div> -->
+
+    <div *ngIf="modalitaDoppia == false" style="width: 45%; float: left; margin-top: 2px; word-break: initial; ">
+      <span style="width: calc(100% - 30px); display: block; float: left;">Griglia</span>
+      <input type="checkbox" style="width: 30px;" [(ngModel)]="griglia" (click)="impostaGriglia()" />
+    </div>
+    <div *ngIf="modalitaDoppia == false" style="width: 55%; float: left; word-break: initial; ">
+      <div style="width: 50%; text-align: left; float: left;">
+        <input type="number" [(ngModel)]="QuanteImmaginiPerGriglia" style="width: 70px;" (blur)="uscitaCampoQuanti($event)" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+      </div>
+      <div style="width: 50%; text-align: right; float: left;">
+        <img src="assets/immagini/icons/icona_CERCA.png" class="immagini" (click)="rinfrescaGriglia()" style=" margin-top: -3px;" />
+      </div>
+    </div>
+    <div *ngIf="modalitaDoppia == false" class="pulisci"></div>
+
+    <div *ngIf="Tipologia == 'Immagini' || modalitaDoppia == true" style="width: 40%; float: left; word-break: initial; margin-top: 2px;">
+      Filtro Immagini
+    </div>
+    <div *ngIf="Tipologia == 'Immagini' || modalitaDoppia == true" style="width: 56%; float: left; word-break: initial; ">
+      <input type="text" [(ngModel)]="FiltroImmagini" (blur)="esceDaFiltroImmagini()" [disabled]="refreshInCorso == true ? true : null" style="width: 100%; height: 29px;" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+    </div>
+    <div *ngIf="Tipologia == 'Immagini' || modalitaDoppia == true" class="pulisci"></div>
+
+    <div *ngIf="Tipologia != 'Immagini' || modalitaDoppia == true" style="width: 40%; float: left; word-break: initial; margin-top: 2px;">
+      Filtro Video
+    </div>
+    <div *ngIf="Tipologia != 'Immagini' || modalitaDoppia == true" style="width: 56%; float: left; word-break: initial; ">
+      <input type="text" [(ngModel)]="FiltroVideo" (blur)="esceDaFiltroVideo()" [disabled]="refreshInCorso == true ? true : null" style="width: 100%; height: 29px;" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+    </div>
+    <div *ngIf="Tipologia != 'Immagini' || modalitaDoppia == true" class="pulisci"></div>
+
+    <div *ngIf="Tipologia == 'Immagini' && modalitaDoppia == false" style="width: calc(100% - 35px); float: left; word-break: initial; margin-top: 2px;">
+      <div style="width: 100%; float: left;">
+        <div style="width: 43%; float: left;">
+          Slide&nbsp;<span (click)="sbloccaProtezione()">show</span>
+        </div>
+        <div style="width: 21%; float: left;">
+          <input type="number" [(ngModel)]="secondiSS" [disabled]="refreshInCorso == true ? true : null" style="width: 100%; height: 29px;" >        
+        </div>
+        <div style="float: left; width: 10%; word-break: initial; margin-top: -1px;">
+          <img *ngIf="slideshowAzionato == false" src="assets/immagini/icons/icona_AVANTI.png" class="immagini" (click)="azionaSlideshow()" style=" margin-top: 1px;" />
+          <img *ngIf="slideshowAzionato == true" src="assets/immagini/icons/elimina_quadrato.png" class="immagini" (click)="azionaSlideshow()" style=" margin-top: 1px;" />
+        </div>
+        <div style="float: left; width: 10%; word-break: initial; margin-top: -2px;">
+          &nbsp;<span *ngIf="slideshowAzionato == true" style="color: blue; font-size: 20px;">{{contatore}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pulisci"></div>
+
+    <div style="width: 100%; float: left; word-break: initial; margin-top: 2px; border-top: 1px solid #557261;">
+      <div style="width: 50%; float: left; word-break: initial; ">
+        Preferiti: {{ quantiPreferiti }}
+      </div>
+      <div style="width: 50%; float: left; word-break: initial; ">
+        Preferiti Protetti: {{ quantiPreferitiProt }}
+      </div>
+    </div>
+
+    <div class="pulisci"></div>
+  </div>
+
+  <img *ngIf="menuCellulare == true" src="assets/immagini/icons/icona_equalizz.png" style="position: absolute; top: 0px; right: 70px; width: 30px; height: 30px;" (click)="impostazioniMostrate = !impostazioniMostrate" />
+  <img *ngIf="menuCellulare == true" src="assets/immagini/icons/matitadx.png" style="position: absolute; top: 0px; right: 35px; width: 30px; height: 30px;" (click)="utilityMostrate = !utilityMostrate" />
+  <img src="assets/immagini/icons/hamburger.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="menuCellulare = !menuCellulare" />
+</div>
+<!-- MENU -->
+
+<div *ngIf="griglia == false && ceCordova == false" 
+  class="barra" 
+  [style.width]="modalitaDoppia === true ? '50%' : '100%'"
+  [style.bottom]="Tipologia == 'Immagini' ? '0px' : '0px'"
+  [style.opacity]="opacitaBarraI"
+  (mouseenter)="opacitaSiI()"
+  (mouseleave)="opacitaNoI()"
+  >
+  <div style="width: 10%; float: left;">
+    <img src="assets/immagini/icons/icona_INDIETRO.png" class="immagini" style="margin-top: 2px;" (click)="indietroMM(1)" />
+  </div>
+  <div class="allineamentoCentro" style="width: 80%; overflow: hidden; white-space: nowrap; float: left; height: 35px;">
+    <div #txtInformazioniI id="txtInformazioniI" style="width: 100%; font-size: 20px; white-space: pre;">
+      {{ testoScrollabileImmagine }}
+    </div>
+  </div>
+  <div class="allineamentoDestra" style="width: 10%; float: left;">
+    <img src="assets/immagini/icons/icona_AVANTI.png" class="immagini" style="margin-top: 2px;" (click)="avantiMM(1)" />
+  </div>
 </div>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div *ngIf="griglia == false && ceCordova == false && modalitaDoppia == true && staConvertendo == false" 
+  class="barra" 
+  style="left: 50%; width: 50%; bottom: 0px;"
+  [style.opacity]="opacitaBarraV"
+  (mouseenter)="opacitaSiV()"
+  (mouseleave)="opacitaNoV()"
+  >
+  <div style="width: 10%; float: left;">
+    <img src="assets/immagini/icons/icona_INDIETRO.png" class="immagini" style="margin-top: 2px;" (click)="indietroMM(2)" />
+  </div>
+  <div class="allineamentoCentro" style="width: 80%; overflow: hidden; white-space: nowrap; float: left; height: 35px;">
+    <div #txtInformazioniV id="txtInformazioniV" style="width: 100%; font-size: 20px; white-space: pre;">
+      {{ testoScrollabileVideo }}
+    </div>
+  </div>
+  <div class="allineamentoDestra" style="width: 10%; float: left;">
+    <img src="assets/immagini/icons/icona_AVANTI.png" class="immagini" style="margin-top: 2px;" (click)="avantiMM(2)" />
+  </div>
+</div>
 
+<div 
+  *ngIf="griglia == false && ceCordova == true"
+  (click)="indietroMM(1)"
+  [style.width]="modalitaDoppia == true ? '15%' : '20%'"
+  style="
+    position: absolute;
+    left: 0px;
+    top: 75px;    
+    z-index: 1500;
+    cursor: pointer;
+    height: 80%;">
+  <!-- <img src="assets/immagini/icons/icona_INDIETRO.png" style="width: 100%; height: 100%; margin-top: 2px;" (click)="indietroMM()" /> -->
+</div>
+
+<!-- TASTI AVANZAMENTO ANDROID -->
+<!-- Immagini -->
+<div 
+  *ngIf="griglia == false && ceCordova == true && staConvertendo == false && Tipologia == 'Immagini'"
+  (click)="avantiMM(1)"
+  [style.width]="modalitaDoppia == true ? '15%' : '20%'"
+  [style.right]="modalitaDoppia == true ? '50%' : '0px'"
+  style="
+    position: absolute;
+    top: 15%;
+    right: 0px;
+    z-index: 1500;
+    cursor: pointer;
+    height: 75%;
+    width: 20%;">
+  <!-- <img src="assets/immagini/icons/icona_INDIETRO.png" style="width: 100%; height: 100%; margin-top: 2px;" (click)="avantiMM()" /> -->
+</div>
+
+<div 
+  *ngIf="griglia == false && ceCordova == true && staConvertendo == false && Tipologia == 'Immagini'"
+  (click)="indietroMM(1)"
+  style="
+    position: absolute;
+    width: 15%;
+    left: 0%;
+    top: 15%;    
+    z-index: 1500;
+    cursor: pointer;
+    height: 75%;">
+  <!-- <img src="assets/immagini/icons/icona_INDIETRO.png" style="width: 100%; height: 100%; margin-top: 2px;" (click)="indietroMM()" /> -->
+</div>
+<!-- Immagini -->
+
+<!-- Video -->
+<div 
+  *ngIf="griglia == false && ceCordova == true && staConvertendo == false && Tipologia != 'Immagini'"
+  (click)="avantiMM(2)"
+  style="
+    position: absolute;
+    right: 0px;
+    top: 15%;
+    z-index: 1500;
+    cursor: pointer;
+    height: 75%;
+    width: 15%;">
+  <!-- <img src="assets/immagini/icons/icona_INDIETRO.png" style="width: 100%; height: 100%; margin-top: 2px;" (click)="avantiMM()" /> -->
+</div>
+
+<div 
+  *ngIf="griglia == false && ceCordova == true && staConvertendo == false && Tipologia != 'Immagini'"
+  (click)="indietroMM(2)"
+  style="
+    position: absolute;
+    width: 15%;
+    left: 0px;
+    top: 15%;    
+    z-index: 1500;
+    cursor: pointer;
+    height: 75%;">
+  <!-- <img src="assets/immagini/icons/icona_INDIETRO.png" style="width: 100%; height: 100%; margin-top: 2px;" (click)="indietroMM()" /> -->
+</div>
+<!-- Video -->
+<!-- TASTI AVANZAMENTO ANDROID -->
+
+<!-- <div class="swipe" (swipe)="onPinch($event)">
+  <h1>Pinch Gesture</h1>
+  <p>Works with both mouse and touch.</p>
+  <h5 [innerHTML]="pinchione"></h5>
+</div> -->
+
+<div class="contenuto" #contenitore>
+  <!-- [style.top]="visualizzataIntestazione == true ? ceCordova == true ? '1px' : '-33px' : ceCordova == true ? '1px' : '-33px'" 
+  [style.height]="visualizzataIntestazione == true ? ceCordova == true ? 'calc(100% - 9px)' : 'calc(100% - 9px)' : ceCordova == true ? 'calc(100% - 5px)' : 'calc(100% - 5px)'"
+  -->
+
+  <!--
+    [style.height]="dimensioneImmagineY"
+    [style.margin-left.px]="margineSinistro"
+    [style.margin-top.px]="margineAlto"
+  <img #immagine *ngIf="griglia == false && Tipologia == 'Immagini'"
+    [src]="pathImmagine" 
+    style="user-select: none; width: 100%; height: 100%;"
+    (click)="clickImmagine()"
+    (error)="erroreImmagine($event)"
+  >
+  -->
+
+  <!-- PREFERITI -->
+  <div *ngIf="informazioniMMI && visualizzataFinestraBottoniI == false" class="tastiBottoni" 
+    [style.left]="modalitaDoppia == true ? '50%' : '100%'"
+  >
+    <img src="assets/immagini/icons/hamburger.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="apreBottoniI()" />
+  </div>
+
+  <div *ngIf="informazioniMMV && modalitaDoppia == true && visualizzataFinestraBottoniV == false" class="tastiBottoni" style="right: 5px;">
+    <img src="assets/immagini/icons/hamburger.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="apreBottoniV()" />
+  </div>
+
+  <div *ngIf="informazioniMMI && visualizzataFinestraBottoniI && (modalitaDoppia == true || (modalitaDoppia == false && Tipologia == 'Immagini'))"
+    class="finestraBottoni" style="width: 220px;"
+    [style.left]="modalitaDoppia == true ? 'calc(50% - 230px)' : 'calc(100% - 230px)'"
+  >
+    <div class="finestraBottoniInterna">
+      <!-- <img src="assets/immagini/icons/icona_MODIFICA-TAG.png" class="immagini" title="Sposta Multimedia a categoria" style="z-index: 1600; margin-right: 8px;" (click)="apriSpostaCategoria(1);" /> -->
+      <img src="assets/immagini/icons/icona-FILTRO.png" class="immagini" title="Visualizza Informazioni Immagine" style="z-index: 1600; margin-right: 8px;" (click)="infoImmagini = true" />
+      <img src="assets/immagini/icons/icona_CERCA.png" class="immagini" title="Scarica Informazioni Immagine" style="z-index: 1600; margin-right: 8px;" (click)="PrendeInformazioniImmagine('S')" />
+      <img src="assets/immagini/icons/icona-NASCONDE.png" class="immagini" title="Sposta Immagine nell'archivio delle piccole" style="z-index: 1600; margin-right: 5px;" (click)="SpostaImmagine(1)" />
+      <img src="assets/immagini/icons/elimina_quadrato.png" class="immagini" title="Elimina Immagine" style="z-index: 1600; margin-right: 5px;" (click)="EliminaMultimedia(1)" />
+      <img *ngIf="informazioniMMI.Preferito == false" src="assets/immagini/icons/preferito_vuoto.png" class="immagini" style="z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(1, 'S')" />
+      <img *ngIf="informazioniMMI.Preferito == true" src="assets/immagini/icons/preferito.png" class="immagini" style="z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(1, 'N')" />
+      <img src="assets/immagini/icons/hamburger.png" style="width: 25px; height: 25px;" (click)="apreBottoniI();" />
+    </div>
+  </div>
+
+  <div *ngIf="informazioniMMV && visualizzataFinestraBottoniV && staConvertendo == false && (modalitaDoppia == true || (modalitaDoppia == false && Tipologia != 'Immagini'))"
+    class="finestraBottoni" style="right: 5px; width: 245px;"
+  >
+    <div class="finestraBottoniInterna">
+      <!-- <img src="assets/immagini/icons/icona_MODIFICA-TAG.png" class="immagini" title="Sposta Multimedia a categoria" style="z-index: 1600; margin-right: 8px;" (click)="apriSpostaCategoria(2);" /> -->
+      <img src="assets/immagini/icons/icona-FILTRO.png" class="immagini" title="Visualizza Informazioni Video" style="z-index: 1600; margin-right: 8px;" (click)="infoVideo = true" />
+      <img src="assets/immagini/icons/icona_CERCA.png" class="immagini" title="Informazioni Video" style="z-index: 1600; margin-right: 8px;" (click)="InformazioniVideo = !InformazioniVideo" />
+      <img src="assets/immagini/icons/elimina_quadrato.png" class="immagini" title="Elimina Video" style="z-index: 1600; margin-right: 8px;" (click)="EliminaMultimedia(2)" />
+      <img *ngIf="conversioneAutomaticaInCorso == false" src="assets/immagini/icons/bat.png" class="immagini" title="Converte Video" style="z-index: 1600; margin-right: 5px;" (click)="converteVideo()" />
+      <img *ngIf="informazioniMMV.Preferito == false" src="assets/immagini/icons/preferito_vuoto.png" class="immagini" style="z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(2, 'S')" />
+      <img *ngIf="informazioniMMV.Preferito == true" src="assets/immagini/icons/preferito.png" class="immagini" style="z-index: 1600; margin-right: 5px;" (click)="impostaPreferito(2, 'N')" />
+      <img src="assets/immagini/icons/hamburger.png" style="width: 25px; height: 25px;" (click)="apreBottoniV()" />
+    </div>
+  </div>
+  <!-- PREFERITI -->
+
+  <!-- INFORMAZIONI VIDEO  -->
+  <div *ngIf="InformazioniVideo == true " class="finestraInfoVideo"
+    [style.left]="modalitaDoppia == false ? '0px' : '50%'"
+  >
+    <table *ngIf="InformazioniVideoJson" style="width: 100%;">
+      <tr *ngFor="let stre of InformazioniVideoJson">
+        <td style="width: 100%;">
+          <tr *ngFor="let streT of stre.Valori">
+            <td style="text-align: left; width: 30%;">{{streT.Nome}}</td>
+            <td style="text-align: left; width: 70%;">{{streT.Valore}}</td>
+          </tr>
+        </td>
+      </tr>
+    </table>
+    <div style="position: absolute; z-index: 1610; right: 1px; top: 5px;">
+      <img src="assets/immagini/icons/icona_CERCA.png" class="immagini" title="Refresh" style="z-index: 1610; " (click)="RefreshInfoVideo()" />
+      <img src="assets/immagini/icons/elimina_quadrato.png" class="immagini" title="Chiude" style="z-index: 1610; " (click)="InformazioniVideo = false" />
+    </div>
+  </div>
+  <!-- INFORMAZIONI VIDEO  -->
+  
+  <!-- INFORMAZIONE CONVERSIONE -->
+  <div *ngIf="staConvertendo==true" class="conversione"
+    [style.left] = "modalitaDoppia == false ? '30%' : '55%'"
+  >
+    CONVERSIONE FILE VIDEO
+    <hr />
+    <div *ngFor="let vi of vecchieInformazioni; let index=index;" style="width: 100%; min-height: 25px;">
+      {{vi}}
+    </div>
+  </div>
+  <!-- INFORMAZIONE CONVERSIONE -->
+
+  <!-- [style.width.px]="dimensioneXImm"
+  [style.height.px]="dimensioneYImm" -->
+
+  <div #immagine 
+    *ngIf="griglia == false && (Tipologia == 'Immagini' || modalitaDoppia == true) && visibileMM == true"
+    style="background-repeat: no-repeat; background-position: center; float: left;"
+    [style.width]="modalitaDoppia === true ? '50%' : '100%'"
+    [style.height]="ceCordova == false ? 'calc(100% - 35px)' : '100%'"
+    [style.background-size]="dimensioneImm"
+    [ngStyle]="{ 'background-image': 'url(\'' + pathImmagine + '\')'}"
+  ></div>
+
+  <!-- 
+  <div class="toolbar">
+    <table style="width: 100%;">
+      <tr>
+        <td colspan="3">
+          <input #ranger1 type="range" min="1" max="1000" [(ngModel)]="scale" (input)="cambioScala()" style="width: 100%;">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{minSpostamentoX}}
+        </td>
+        <td>
+          <input #ranger2 type="range" [min]="minSpostamentoX" [max]="maxSpostamentoX" [(ngModel)]="spostamentoX" (input)="cambioScala()" style="width: 100%;">
+        </td>
+        <td>
+          {{maxSpostamentoX}}              
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{minSpostamentoY}}
+        </td>
+        <td>
+          <input #ranger3 type="range" [min]="minSpostamentoY" [max]="maxSpostamentoY" [(ngModel)]="spostamentoY" (input)="cambioScala()" style="width: 100%;">
+        </td>
+        <td>
+          {{maxSpostamentoY}}              
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{scale}}
+        </td>
+        <td>
+          {{spostamentoX}}
+        </td>
+        <td>
+          {{spostamentoY}}
+        </td>
+      </tr>
+    </table>
+  </div>
+-->
+
+  <!-- <video *ngIf="Tipologia != 'Immagini'" [src]="pathVideo" style="width: 100%; height: 100%;"></video>
+
+  <video *ngIf="Tipologia" width="100%" height="100%" controls>
+    <source [src]="pathVideo" [type]="tipoVideo">
+    Your browser does not support the video tag.
+  </video> -->
+
+  <!--     [style.height]="ceCordova == false ? 'calc(100% - 35px)' : '100%'"
+  -->
+  <div *ngIf="griglia == false && (Tipologia != 'Immagini' || modalitaDoppia == true) && visibileMM == true"
+    style="height: 100%; float: left; border-left: 1px solid white;"
+    [style.width]="modalitaDoppia == true ? '50%' : '100%'"
+    [style.height]="ceCordova == false ? 'calc(100% - 35px)' : '100%'"
+    >
+    <video #videoPlayer id="videoPlayer" width="100%" height="100%" poster="{{thumbsVideo}}" 
+      preload="none" src="{{pathVideo}}" controls muted autoplay>
+      Sorry, your browser doesn't support embedded videos.
+    </video>
+  </div>
+
+  
+  <!-- <mat-video 
+    *ngIf="griglia == false && Tipologia != 'Immagini'" 
+    #videoPlayer 
+    id="videoPlayer" 
+    width="100%" 
+    height="100%"
+    src="{{pathVideo}}"
+    muted="true"
+    [preload]="true"
+    [fullscreen]="true"
+    [autoplay]="true"
+    poster="{{thumbsVideo}}"
+  >
+
+  </mat-video> -->
+
+
+  <div *ngIf="griglia == true && listaSelezionata.indexOf('Preferiti') == -1 && listaSelezionata.indexOf('Tutto') == -1 && sbloccataProtezione == true" style="margin-top: 30px; width: 100%; height: 100%; overflow: auto; padding: 5px;">
+    <div style="width: 100%; height: auto;">
+      <div *ngFor="let d of strutturaGriglia; let index=index;" class="griglietta">
+        <img [src]="d.PercorsoCompleto" title="Immagine {{d.idMultimedia}}" style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;" (click)="selezioneDaGriglia(d)">
+      </div>
+    </div>
+  </div>
+
+  <!-- <img src="assets/immagini/icons/elabora.png" style="position: absolute; bottom: 10px; left: 100px; width: 40px; height: 40px;" (click)="azionaVideo()"> -->
+</div>
+
+<!-- UTILITY -->
+<div *ngIf="ElaboraUtility == true" class="tuttoNero2">
+  
+</div>
+
+<div ngDraggable [handle]="titoloU" *ngIf="utilityMostrate == true" class="utility">
+  <div #titoloU class="drag-block-handle" class="intestazione">Utility</div>
+  <h6>Immagini</h6>
+  <hr />
+
+  <div *ngIf="conversioneAutomaticaInCorsoI == false" class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_REFRESH.png" style="width: 40px; height: 40px" (click)="refreshArchivio()" /><br />
+    Refresh<br />Immagini
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorsoI == false" class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="width: 40px; height: 40px" (click)="RefreshInfoImmaginiTutti()" /><br />
+    Refresh<br />Info Immagini
+  </div>
+
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="cursor: pointer; width: 40px; height: 40px" (click)="CaricaExifImmagini('N')" /><br />
+    Carica<br />Exif Mancanti
+  </div>
+
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="cursor: pointer; width: 40px; height: 40px" (click)="CaricaExifImmagini('S')" /><br />
+    Carica<br />Tutti Exif
+  </div>
+
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="cursor: pointer; width: 40px; height: 40px" (click)="CaricaPuntiMancanti('N')" /><br />
+    Carica<br />Punti Mancanti
+  </div>
+
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="cursor: pointer; width: 40px; height: 40px" (click)="CaricaPuntiMancanti('S')" /><br />
+    Carica<br />Tutti i Punti
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorsoI == true" class="bottoneUtility">
+    <img src="assets/immagini/icons/elimina_quadrato.png" style="width: 40px; height: 40px" (click)="BloccaInformazioniImmagini()" /><br />
+    Blocca<br />Conv. Imm.
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorsoI == true" class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_CERCA.png" style="width: 40px; height: 40px" (click)="VisualizzaAvanzamentoConversioneI()" /><br />
+    Visualizza<br />Info Conv. Imm.
+  </div>
+
+  <div style="clear: both"></div>
+  <hr />
+
+  <h6>Video</h6>
+  <hr />
+  
+  <div *ngIf="conversioneAutomaticaInCorso == false" class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_REFRESH.png" style="width: 40px; height: 40px" (click)="RefreshInfoVideoTutti()" /><br />
+    Refresh<br />Info Video
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorso == false" class="bottoneUtility">
+    <img src="assets/immagini/icons/elabora.png" style="width: 40px; height: 40px" (click)="ConvertiVideoTutti()" /><br />
+    <br />Converti Video
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorso == true" class="bottoneUtility">
+    <img src="assets/immagini/icons/elimina_quadrato.png" style="width: 40px; height: 40px" (click)="BloccaConvertiVideoTutti()" /><br />
+    Blocca Conversione
+  </div>
+
+  <div *ngIf="conversioneAutomaticaInCorso == true" class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_CERCA.png" style="width: 40px; height: 40px" (click)="VisualizzaAvanzamentoConversione()" /><br />
+    Visualizza<br />Info Conv.
+  </div>
+
+  <div style="clear: both"></div>
+  <hr />
+
+  <h6>Utility</h6>
+  <hr />
+  
+  <!-- *ngIf="conversioneAutomaticaInCorsoI == false && conversioneAutomaticaInCorso == false"  -->
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_CERCA.png" style="cursor: pointer; width: 40px; height: 40px" (click)="RilevaImmaginiUguali()" /><br />
+    Gestione<br />Immagini
+  </div>
+
+  <!-- <div class="bottoneUtility">
+    <img src="assets/immagini/icons/icona_CERCA.png" style="cursor: pointer; width: 40px; height: 40px" (click)="RilevaImmaginiPiccole()" /><br />
+    Rileva<br />Immagini Piccole
+  </div> -->
+
+  <div class="bottoneUtility">
+    <img src="assets/immagini/icons/matitadx.png" style="cursor: pointer; width: 40px; height: 40px" (click)="CreazioneNuovaCategoria()" /><br />
+    Creazione<br />Categoria
+  </div>
+
+  <!-- <div class="bottoneUtility">
+    <img src="assets/immagini/icons/matitadx.png" style="cursor: pointer; width: 40px; height: 40px" (click)="fAssociazioneTastiCategorie()" /><br />
+    Associazione<br />Categorie / Tasti
+  </div> -->
+
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="cursor: pointer; position: absolute; top: 4px; right: 3px; width: 30px; height: 30px;" (click)="utilityMostrate = false" />
+</div>
+<!-- UTILITY -->
+
+<!-- Lista ID Multimedia -->
+<div *ngIf="idMultimediaMostrate == true" class="idMultimedia">
+  <table *ngIf="listaMultimediaId" style="width: 100%;">
+    <tr *ngFor="let lista of listaMultimediaId">
+      <td style="width: 50px; text-align: center;">
+        <img src="assets/immagini/icons/icona_AVANTI.png" style="cursor: pointer; width: 25px; height: 25px" (click)="caricaIDMultimedia(idTipologiaPerSceltaID, lista.Progressivo, lista.Descrizione)" />
+      </td>
+      <td style="width: 50px; text-align: center;">
+        <img src="assets/immagini/icons/matitadx.png" style="cursor: pointer; width: 25px; height: 25px" (click)="modificaIDMultimedia(idTipologiaPerSceltaID, lista.Progressivo, lista.Descrizione, lista.idMultimedia, false)" >
+      </td>
+      <td style="width: 50px; text-align: center;">
+        <img src="assets/immagini/icons/icona_ELIMINA-TAG.png" style="cursor: pointer; width: 25px; height: 25px" (click)="eliminaIDMultimedia(idTipologiaPerSceltaID, lista.Progressivo)" />
+      </td>
+      <td style="width: 50px; text-align: center;">
+        <img src="assets/immagini/icons/icona_REFRESH.png" style="cursor: pointer; width: 25px; height: 25px" (click)="modificaIDMultimedia(idTipologiaPerSceltaID, lista.Progressivo, lista.Descrizione, -1, false)" />
+      </td>
+      <td style="width: 10%;">
+        {{lista.Progressivo}}
+      </td>
+      <td style="width: 10%;">
+        {{lista.idMultimedia}}
+      </td>
+      <td style="width: calc(80% - 200px);">
+        {{lista.Descrizione}}
+      </td>
+    </tr>
+  </table>
+
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="idMultimediaMostrate = false" />
+</div>
+<!-- Lista ID Multimedia -->
+
+<!-- Modifica ID -->
+<div *ngIf="idMultimediaModMostrate == true" class="idMultimediaMod">
+  <table style="width: 100%;">
+    <tr>
+      <td>
+        Descrizione
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="DescrizioneIDM" style="width: 100%" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Id Multimedia
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="IDM" style="width: 100%" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+      </td>
+    </tr>
+  </table>
+
+  <div style="width: 100%;">
+    <div style="width: 50%; float: left; text-align: center;">
+      <img src="assets/immagini/icons/icona_SALVA.png" style="width: 30px; height: 30px;" (click)="salvaIDMM()" />
+    </div>
+    <div style="width: 50%; float: left; text-align: center;">
+      <img src="assets/immagini/icons/elimina_quadrato.png" style="width: 30px; height: 30px;" (click)="idMultimediaModMostrate = false" />
+    </div>
+  </div>
+</div>
+<!-- Modifica ID -->
+
+<!-- Avanzamento Conversione -->
+<div *ngIf="avanzamentoConversioneMostrato == true" class="avanzamentoConversione" >
+  <div style="width: 100%; height: 100%; overflow: auto;" [innerHTML]="testoAvanzamentoConversione">
+  </div>
+
+  <img src="assets/immagini/icons/icona_CERCA.png" style="position: absolute; top: 0px; right: 35px; width: 30px; height: 30px;" (click)="VisualizzaAvanzamentoConversione()" />
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="avanzamentoConversioneMostrato = false" />
+</div>
+<!-- Avanzamento Conversione -->
+
+<!-- Informazioni immagine -->
+<div *ngIf="informazioniMMI && infoImmagini" class="infoImmagini" >
+  <table style="width: 100%;">
+    <tr>
+      <td>Cartella:</td><td>{{informazioniMMI.Cartella}}</td>
+    </tr>
+    <tr>
+      <td>Data File:</td><td>{{informazioniMMI.DataFile}}</td>
+    </tr>
+    <tr>
+      <td>Dimensioni:</td><td style="text-align: right;">{{informazioniMMI.Dimensioni}}</td>
+    </tr>
+<!-- <tr>
+      <td>Hash:</td><td>{{informazioniMMI.Hash}}</td>
+    </tr> -->
+    <tr>
+      <td>Nome File:</td><td>{{informazioniMMI.Nome}}</td>
+    </tr>
+    <tr>
+      <td>Path:</td><td>{{informazioniMMI.Path}}</td>
+    </tr>
+    <tr>
+      <td>Preferito:</td>{{informazioniMMI.Preferito}}<td>
+    </tr>
+    <tr>
+      <td>Punti:</td><td style="text-align: right;">{{informazioniMMI.Punti}}</td>
+    </tr>
+    <tr>
+      <td>Larghezza:</td><td style="text-align: right;">{{informazioniMMI.Width}}</td>
+    </tr>
+    <tr>
+      <td>Altezza:</td><td style="text-align: right;">{{informazioniMMI.Height}}</td>
+    </tr>
+    <tr>
+      <td>idCategoria:</td><td style="text-align: right;">{{informazioniMMI.idCategoria}}</td>
+    </tr>
+    <tr>
+      <td>idMultimedia:</td><td style="text-align: right;">{{informazioniMMI.idMultimedia}}</td>
+    </tr>
+  </table>
+
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="infoImmagini = false" />
+</div>
+<!-- Informazioni immagine -->
+
+<!-- Informazioni Video -->
+<div *ngIf="informazioniMMV && infoVideo" class="infoImmagini" [style.left]="modalitaDoppia == true ? '50%' : '10px'" >
+  <table style="width: 100%;">
+    <tr>
+      <td>Cartella:</td><td>{{informazioniMMV.Cartella}}</td>
+    </tr>
+    <tr>
+      <td>Data File:</td><td>{{informazioniMMV.DataFile}}</td>
+    </tr>
+    <tr>
+      <td>Dimensioni:</td><td style="text-align: right;">{{informazioniMMV.Dimensioni}}</td>
+    </tr>
+    <tr>
+      <td>Nome File:</td><td>{{informazioniMMV.Nome}}</td>
+    </tr>
+    <tr>
+      <td>Path:</td><td>{{informazioniMMV.Path}}</td>
+    </tr>
+    <tr>
+      <td>Preferito:</td>{{informazioniMMV.Preferito}}<td>
+    </tr>
+    <tr>
+      <td>Larghezza:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[0].coded_width}}</td>
+    </tr>
+    <tr>
+      <td>Altezza:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[0].coded_height}}</td>
+    </tr>
+    <tr>
+      <td>Bit Rate Video:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[0].bit_rate}}</td>
+    </tr>
+    <tr>
+      <td>Codec Video:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[0].codec_long_name}}</td>
+    </tr>
+    <tr>
+      <td>Bit Rate Audio:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[1].bit_rate}}</td>
+    </tr>
+    <tr>
+      <td>Codec Audio:</td><td style="text-align: right;">{{informazioniMMV.Jsone.streams[1].codec_long_name}}</td>
+    </tr>
+    <tr>
+      <td>idCategoria:</td><td style="text-align: right;">{{informazioniMMV.idCategoria}}</td>
+    </tr>
+    <tr>
+      <td>idMultimedia:</td><td style="text-align: right;">{{informazioniMMV.idMultimedia}}</td>
+    </tr>
+  </table>
+
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="infoVideo = false" />
+</div>
+<!-- Informazioni Video -->
+
+<!-- Gestione immagini duplicate -->
+<app-immagini-duplicate
+  [mascheraVisibile]="mascheraVisibileDuplicati"
+  [idCategoria]="idCategoriaAttualeI"
+  [pathImmagini]="pathCC"
+  [listaSelezionata]="listaSelezionata"
+  [sbloccataProtezione]="sbloccataProtezione"
+  [listaCategorie]="listaImmagini"
+  [listaImpostataDaTasto]="listaSelezionataDaTasto"
+  [lista]="lista"
+  [t]="questo"
+
+  (mascheraNascosta)="chiudeMascheraDuplicati()"
+  (quantiPreferiti)="quantiPreferiti = $event"
+  (quantiPreferitiProt)="quantiPreferitiProt = $event"
+  (entratoTesto)="entratoCampoTesto($event)"
+>
+
+</app-immagini-duplicate>
+<!-- Gestione immagini duplicate -->
+
+<!-- Gestione immagini piccole
+<app-immagini_piccole
+  [mascheraVisibile]="mascheraVisibilePiccole"
+  [idCategoria]="idCategoriaAttualeI"
+  [pathImmagini]="pathCC"
+  [listaSelezionata]="listaSelezionata"
+  [sbloccataProtezione]="sbloccataProtezione"
+
+  (mascheraNascosta)="chiudeMascheraPiccole()"
+  (quantiPreferiti)="quantiPreferiti = $event"
+  (quantiPreferitiProt)="quantiPreferitiProt = $event"
+>
+
+</app-immagini_piccole>
+Gestione immagini duplicate -->
+
+<!-- Informazioni Varie -->
+<div ngDraggable *ngIf="visualizzaInformazioni == true && informazioniImmagine" class="informazioniVarie" 
+  [style.top]="menuCellulare == true ? '340px' : '40px'">
+  <table style="width: 100%;">
+    <tr *ngFor="let inf of informazioniImmagine">
+      <td>{{inf.Informazione}}</td>
+      <td style="text-align: right;">{{inf.Valore}}</td>
+    </tr>
+  </table>
+
+  <img *ngIf="caricamentoInformazioni == true" src="assets/immagini/icons/please_wait.gif" style="position: absolute; left: 0px; top: 30px; width: 100%; height: calc(100% - 30px); opacity: .75;" />
+
+  <img src="assets/immagini/icons/icona-FILTRO.png" style="cursor: pointer; position: absolute; top: 0px; right: 70px; width: 30px; height: 30px;" (click)="caricaInformazioniCategorie()" />
+  <img src="assets/immagini/icons/icona_CERCA.png" style="cursor: pointer; position: absolute; top: 0px; right: 35px; width: 30px; height: 30px;" (click)="caricaInformazioni()" />
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="cursor: pointer; position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="chiudeInformazioni()" />
+</div>
+
+<div ngDraggable *ngIf="informazioniCategorieVisualizzate" class="informazioniVarie" [style.left]="menuCellulare == true ? '170px' : '5px'" [style.top]="menuCellulare == true ? '340px' : '240px'">
+  <table style="width: 100%;">
+    <tr>
+      <td>
+        <div style="width:100%; text-align: left;">
+          <table style="width: 250px">
+            <tr>
+              <th>Categoria</th><th>Immagini</th><th>Preferiti</th><th *ngIf="Tipologia=='Immagini' || modalitaDoppia == true">Info Immagini</th><th *ngIf="Tipologia=='Video' || modalitaDoppia == true">Info Video</th>
+            </tr>
+            <tr *ngFor="let infCat of informazioniCategorie">
+              <td>
+                {{infCat.Categoria}}
+              </td>          
+              <td style="text-align: right;">
+                {{infCat.Tutte}}
+              </td>
+              <td style="text-align: right;">
+                {{infCat.Preferiti}}
+              </td>
+              <td *ngIf="Tipologia=='Immagini' || modalitaDoppia == true" style="text-align: right;">
+                {{infCat.InfoImmagini}}
+              </td>
+              <td  *ngIf="Tipologia=='Video' || modalitaDoppia == true" style="text-align: right;">
+                {{infCat.InfoVideo}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <img src="assets/immagini/icons/elimina_quadrato.png" style="cursor: pointer; position: absolute; top: 0px; right: 0px; width: 30px; height: 30px;" (click)="informazioniCategorieVisualizzate = false" />
+</div>
+<!-- Informazioni Varie -->
+
+<!-- Creazione nuova categoria -->
+<div *ngIf="creaCategoria == true" class="tuttoNero2" style="z-index: 2005;"></div>
+<div ngDraggable [handle]="titoloCC" *ngIf="creaCategoria == true" class="creazioneCategoria">
+  <div #titoloCC class="drag-block-handle" class="intestazione">Creazione categoria</div>
+  <table style="width: 100%;">
+    <tr>
+      <td>
+        Tipologia
+      </td>
+      <td>
+        <input type="radio" value="1" name="gender2" [(ngModel)]="categoriaTipologia" (click)="cambiaCategoriaTipologia()">&nbsp;Immagini
+        <br />
+        <input type="radio" value="2" name="gender2" [(ngModel)]="categoriaTipologia" (click)="cambiaCategoriaTipologia()">&nbsp;Video
+      </td>
+    </tr>
+    <tr>
+      <td>Nome Categoria</td>
+      <td>
+        <input type="text" [(ngModel)]="nomeNuovaCategoria" style="width: 100%; height: 29px;" (focus)="entratoCampoTesto(true)" (focusout)="entratoCampoTesto(false)" >
+      </td>
+    </tr>
+    <tr>
+      <td>Protetta</td>
+      <td>
+        <input type="checkbox" [checked]="categoriaProtetta == true" (change)="cambiaCategoriaProtetta($event)" />
+      </td>
+    </tr>
+    <tr>
+      <td>Aggiunta Inutile</td>
+      <td>
+        <input type="checkbox" [checked]="aggiuntaInutile == true" (change)="cambiaAggiuntaInutile($event)" />
+      </td>
+    </tr>
+    <tr>
+      <td>Sotto Categoria</td>
+      <td>
+        <input type="checkbox" [checked]="sottoCategoria == true" (change)="cambiaSottoCategoria($event)" />
+      </td>
+    </tr>
+    <tr>
+      <td>Categoria Madre</td>
+      <td>
+        <select [(ngModel)]="listaSelezionataPerCreaCategoria" style="width: 100%;" (click)="modificataComboCreaCategoria($event)">
+          <option *ngFor="let listina of lista" 
+            [value]="listina.NomeLista" 
+            [attr.selected]="listaSelezionataPerCreaCategoria==listina.NomeLista ? true : null">
+            {{listina.NomeLista}}
+          </option>
+        </select>          
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 50%; text-align: center;">
+        <img src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" (click)="CreazioneCategoriaSalvataggio()" />
+      </td>
+      <td style="width: 50%; text-align: center;">
+        <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="creaCategoria = false" />
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- Creazione nuova categoria -->
+
+<!-- Spostamento a categoria -->
+<!-- <div *ngIf="spostaACategoria == true" class="tuttoNero2" style="z-index: 2005;"></div> -->
+<div *ngIf="spostaACategoria == true && Tipologia == 'Immagini' && modalitaDoppia == false" ngDraggable [handle]="titoloSC1" class="creazioneCategoriaFissa" 
+  [style.right]="modalitaDoppia === true ? '50%' : '0px'">
+  <div #titoloSC1 class="drag-block-handle" class="intestazione">Spostamento a categoria</div>
+  <table style="width: 100%;">
+    <tr style="border-bottom: 1px solid #999;">
+      <td>
+        Tipologia
+      </td>
+      <td>
+        <select [(ngModel)]="listaSelezionataPerSpostamento" style="width: 100%;" (click)="modificataComboImmaginiPS($event)">
+          <option *ngFor="let listina of lista" 
+            [value]="listina.NomeLista" 
+            [attr.selected]="listaSelezionataPS==listina.NomeLista ? true : null">
+            {{listina.NomeLista}}
+          </option>
+        </select>          
+      </td>
+    </tr>
+    <tr style="border-bottom: 1px solid #999;">
+      <td>
+        Selezionata
+      </td>
+      <td>
+        {{listaSelezionataPS}}
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 50%; text-align: center;">
+        <img src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" (click)="SpostaMultimediaAdAltraCategoria()" />
+      </td>
+      <td style="width: 50%; text-align: center;">
+        <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="spostaACategoria = false" />
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- Spostamento a categoria -->
+
+<!-- Associazione Categorie Tasti -->
+<!-- <div *ngIf="associazioneTastiCategorie == true" class="tuttoNero2" style="z-index: 2005;"></div> -->
+<div *ngIf="associazioneTastiCategorie == true && Tipologia == 'Immagini' && modalitaDoppia == false" ngDraggable [handle]="titoloAT" class="associazioneCategorieTasti" 
+  [style.right]="modalitaDoppia == true ? '50%' : '0px' ">
+  <div #titoloAT class="drag-block-handle" class="intestazione">Associazione Tasti</div>
+  <table style="width: 100%;">
+    <tr>
+      <th>
+        Tasto
+      </th>
+      <th>
+        Categoria
+      </th>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        S
+      </td>
+      <td>
+        Sposta a categoria
+      </td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        E
+      </td>
+      <td>
+        Elimina
+      </td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        P
+      </td>
+      <td>
+        Preferito Si/No
+      </td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr *ngFor="let tasto of tastiConfigurati">
+      <td>
+        {{tasto.idTasto}}
+      </td>
+      <td>
+        <select style="width: 100%;" (click)="cambiaTasto(tasto.idTasto, $event)">
+          <option *ngFor="let listina of listaTasti" 
+            [value]="tasto.Lista" 
+            [attr.selected]="tasto.Lista==listina.NomeLista ? true : null">
+            {{listina.NomeLista}}
+          </option>
+        </select>  
+      </td>
+      <td>
+        <img src="assets/immagini/icons/icona_PLAY.png" title="Salva" class="immagini" style="width: 25px; height: 25px;" (click)="impostaListaTasto(tasto.idTasto)" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+
+      </td>
+      <td style="text-align: center;">
+        <img src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" (click)="salvaTasti()" />
+      </td>
+      <td style="text-align: center;">
+        <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="associazioneTastiCategorie = false" />
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- Associazione Categorie Tasti -->
+
+<!-- Impostazioni -->
+<div *ngIf="impostazioniMostrate == true" class="tuttoNero2" style="z-index: 2005;"></div>
+<div ngDraggable [handle]="titoloImp" *ngIf="impostazioniMostrate == true" class="impostazioni">
+  <div #titoloImp class="drag-block-handle" class="intestazione">Spostamento a categoria</div>
+  <h5>Impostazioni</h5>
+  <hr />
+  <table style="width: 100%;">
+    <tr>
+      <td style="text-align: left; margin-top: 5px;">
+        Visualizza Informazioni
+      </td>
+      <td style="margin-top: 5px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="visualizzaInformazioni" (click)="impostaVisualizzaInformazioni()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 10px;">
+        Immagine a tutto schermo
+      </td>
+      <td style="margin-top: 5px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="visualizzaTuttoSchermo" (click)="impostaVisualizzaTuttoSchermo()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 10px;">
+        Visualizza finestra<br />Spostamento categoria
+      </td>
+      <td style="margin-top: 5px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="spostaACategoria" (click)="impostaVisualizzaCategoria()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 5px;">
+        Visualizza finestra<br />
+        Tasti categoria
+      </td>
+      <td style="margin-top: 10px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="associazioneTastiCategorie" (click)="impostaVisualizzaTasti()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 5px;">
+        Modalità Test<br />
+        su aggiornamento
+      </td>
+      <td style="margin-top: 10px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="EseguiSoloTest" (click)="impostaSoloTest()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 5px;">
+        Visualizza<br />
+        Categorie Tablet
+      </td>
+      <td style="margin-top: 10px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="spostamentoTablet" (click)="impostaSpostamentoTablet()" />
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left; margin-top: 5px;">
+        Visualizza<br />
+        Immagini Uguali
+      </td>
+      <td style="margin-top: 10px;">
+        <input type="checkbox" style="width: 30px;" [(ngModel)]="mascheraUguali" (click)="impostaMascheraUguali()" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="border-top: 1px solid #999;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="border-top: 1px solid #999;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+
+      </td>
+      <td>
+        <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="impostazioniMostrate = false" />
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- Impostazioni -->
+
+<!-- Spostamento per tablet -->
+<div *ngIf="spostamentoTablet == true && Tipologia == 'Immagini' && modalitaDoppia == false" ngDraggable [handle]="titoloSC" class="spostamentoTablet">
+  <div #titoloSC class="drag-block-handle" class="intestazione">
+    <div style="width: calc(100% - 30px); float: left; text-align: left;">
+      Spostamento a categoria
+    </div>
+    <div style="width: 30px; float: left;">
+      <img src="assets/immagini/icons/icona_REFRESH.png" title="Ricarica categorie" class="immagini" style="width: 25px; height: 25px;" (click)="leggeCategorieImmagini()" />
+    </div>
+  </div>
+  <table style="width: 100%;">
+      <tr style="border-bottom: 1px solid #999;">
+        <td>
+          Selezionata
+        </td>
+        <td>
+          {{listaSelezionataPS}}
+        </td>
+      </tr>    
+      <!-- <tr>
+        <th></th>
+        <th>
+          Categoria
+        </th>
+      </tr> -->
+      <tr *ngFor="let categorie of lista" [style.background-color]="categorie.RigaDispari == true ? '#efef92' : '#d1d164'">
+        <td>
+          <img *ngIf="categorie.RigaDispari == true" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
+          <span  *ngIf="categorie.RigaDispari == false">{{categorie.NomeLista}}</span>
+        </td>
+        <td>
+          <img *ngIf="categorie.RigaDispari == false" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
+          <span  *ngIf="categorie.RigaDispari == true">{{categorie.NomeLista}}</span>
+        </td>
+      </tr>
+      <tr style="border-top: 1px solid #999;">
+        <td>
+  
+        </td>
+        <td style="text-align: right;">
+          <img src="assets/immagini/icons/elimina_quadrato.png" title="Salva" class="immagini" (click)="chiudiSpostamentoTablet()" />
+        </td>
+      </tr>  
+   </table>
+</div>
+<!-- Spostamento per tablet -->
+
+<!-- Lista uguali -->
+<div *ngIf="mascheraUguali && immaginiUguali && sbloccataProtezione" class="listaUguali" ngDraggable [handle]="titoloUguali" 
+  [style.bottom]="ceCordova === true ? '5px' : '40px'"
+>
+  <div #titoloUguali class="drag-block-handle" style="width: 100%; height: 25px; text-align: center; background-color: #abab59; margin-bottom: 5px;">
+    Immagini Uguali
+  </div>
+  <div *ngFor="let uguale of immaginiUguali" class="immagineUguale">
+    <img style="left: 0px; top: 0px; width: 100%; height: 100%;" [src]="uguale.PathImmagine" />
+
+    <div style="width: 100%; height: 20px; text-align: right; margin-top: -22px;">
+      <img src="assets/immagini/icons/icona_ELIMINA-TAG.png" title="Elimina" class="immagini"  style="width: 20px; height: 20px; margin-top: -8px;" (click)="eliminaImmagine(uguale)" />
+    </div>
+  </div>
+</div>
+<!-- Lista uguali -->

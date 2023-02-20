@@ -1,0 +1,35 @@
+{
+    "name": "@red-mobile/cordova-plugin-powermanagement",
+    "version": "2.0.1",
+    "description": "Plugin for managing the power state (i.e. idle switching).",
+    "cordova": {
+        "id": "@red-mobile/cordova-plugin-powermanagement",
+        "platforms": [
+            "android"
+        ]
+    },
+    "scripts": {
+        "test": "npm run jshint",
+        "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/okhiroyuki/cordova-plugin-powermanagement.git"
+    },
+    "author": "Hiroyuki Okada",
+    "license": "Apache-2.0",
+    "engines": {
+        "cordova": ">=10.0.0"
+    },
+    "bugs": {
+        "url": "https://github.com/okhiroyuki/cordova-plugin-powermanagement/issues"
+    },
+    "homepage": "https://github.com/okhiroyuki/cordova-plugin-powermanagement#readme",
+    "keywords": [
+        "ecosystem:cordova",
+        "cordova-android"
+    ],
+    "devDependencies": {
+        "jshint": "^2.12.0"
+    }
+}

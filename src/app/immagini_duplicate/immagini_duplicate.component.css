@@ -1,0 +1,160 @@
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+}
+
+.maschera {
+    -webkit-box-shadow: 1px 13px 21px -2px #000000;
+    -moz-box-shadow: 1px 13px 21px -2px #000000;
+    -o-box-shadow: 1px 13px 21px -2px #000000;
+    box-shadow: 1px 13px 21px -2px #000000;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    z-index: 2000;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    overflow: auto;
+    background-color: #efef92;
+    border: 1px solid #999;
+    border-radius: 3px;
+    opacity: .95;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    padding: 5px;
+}
+
+.oscura {
+    position: absolute; 
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .75;
+    z-index: 2001;
+}
+
+.immagine {
+    margin: 3px;
+    border: 1px solid #999;
+    float: left;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #c3c790;
+    -webkit-box-shadow: 1px 13px 21px -2px #000000;
+    -moz-box-shadow: 1px 13px 21px -2px #000000;
+    -o-box-shadow: 1px 13px 21px -2px #000000;
+    box-shadow: 1px 13px 21px -2px #000000;
+}
+
+.immagine:hover {
+    -webkit-box-shadow: 1px 3px 5px -2px #000000;
+    -moz-box-shadow: 1px 3px 5px -2px #000000;
+    -o-box-shadow: 1px 3px 5px -2px #000000;
+    box-shadow: 1px 3px 5px -2px #000000;
+}
+
+.immagineVisualizzata {
+    -webkit-box-shadow: 1px 13px 21px -2px #000000;
+    -moz-box-shadow: 1px 13px 21px -2px #000000;
+    -o-box-shadow: 1px 13px 21px -2px #000000;
+    box-shadow: 1px 13px 21px -2px #000000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2002;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    height: 95%;
+    overflow: auto;
+    background-color: #efef92;
+    border: 1px solid #999;
+    border-radius: 3px;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    padding: 5px;
+}
+
+.popupEliminaSposta {
+    -webkit-box-shadow: 1px 13px 21px -2px #000000;
+    -moz-box-shadow: 1px 13px 21px -2px #000000;
+    -o-box-shadow: 1px 13px 21px -2px #000000;
+    box-shadow: 1px 13px 21px -2px #000000;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    z-index: 2002;
+    /* transform: translate(-50%, -50%); */
+    width: auto;
+    height: auto;
+    overflow: auto;
+    background-color: #efa092;
+    border: 1px solid #999;
+    border-radius: 3px;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
+.creazioneCategoria {
+    box-shadow: 1px 13px 21px -2px #000000;
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    z-index: 2010;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 50%;
+    max-height: 70%;
+    overflow: auto;
+    background-color: #efef92;
+    border: 1px solid #999;
+    border-radius: 3px;
+    opacity: .85;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    padding: 5px;
+}
+
+.intestazione {
+    width: 100%;
+    height: 28px;
+    background-color: #abab59;
+    text-align: center;
+    color: #fbfbb7;
+    font-size: 14px;
+    border: 0px;
+}
+
+.listaRicerche {
+    box-shadow: 1px 13px 21px -2px #000000;
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    z-index: 2010;
+    width: auto;
+    height: auto;
+    max-width: 70%;
+    max-height: 40%;
+    overflow: auto;
+    background-color: #efef92;
+    border: 1px solid #999;
+    border-radius: 3px;
+    opacity: .85;
+    /* margin-left: 5px; */
+    font-size: 12px;
+    padding: 5px;
+}

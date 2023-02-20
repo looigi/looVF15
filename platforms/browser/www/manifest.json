@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "looPlayerWebC",
+  "short_name": "looPlayerWebC",
+  "version": "com.looPlayerWeb.looigi",
+  "description": "LooWebPlayer II",
+  "author": "Looigi",
+  "icons": [],
+  "start_url": "index.html"
+}

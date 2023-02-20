@@ -1,0 +1,54 @@
+{
+  "_from": "git+https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+  "_id": "cordova-aspolar-plugin-signal-strength@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-aspolar-plugin-signal-strength",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+    "rawSpec": "https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+    "saveSpec": "git+https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+    "fetchSpec": "https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/JVasconsueloM/aspolar-signal-strength.git#a5ad0bb4ef13b97b00cd7db1320b1c7174aa92ea",
+  "_spec": "https://github.com/JVasconsueloM/aspolar-signal-strength.git",
+  "_where": "D:\\Sorgenti\\Angular\\looVF",
+  "author": {
+    "name": "AsPolar"
+  },
+  "bugs": {
+    "url": "https://github.com/JVasconsueloM/aspolar-signal-strength/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-aspolar-plugin-signal-strength",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "A sample for a new cordova plugin",
+  "homepage": "https://github.com/JVasconsueloM/aspolar-signal-strength#readme",
+  "keywords": [
+    "cordova",
+    "plugin",
+    "signal",
+    "strength",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-aspolar-plugin-signal-strength",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JVasconsueloM/aspolar-signal-strength.git"
+  },
+  "version": "1.0.0"
+}
