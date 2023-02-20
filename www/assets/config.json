@@ -1,0 +1,5 @@
+{ 
+    "pathWS": "http://looigi.ddns.net:1050/",
+    "pathCC": "http://looigi.ddns.net:1051",
+    "pathPiccole":  "http://looigi.ddns.net:1052"
+}

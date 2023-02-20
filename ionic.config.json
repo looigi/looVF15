@@ -1,0 +1,7 @@
+{
+  "name": "looVF",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
