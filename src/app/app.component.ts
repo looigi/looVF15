@@ -271,6 +271,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             Lista: element
           }
           this.tastiConfigurati.push(tt);
+        } else {
+          const tt = {
+            idTasto: i,
+            Lista: ''
+          }
+          this.tastiConfigurati.push(tt);
         }
         i++;
       });
