@@ -97,6 +97,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   listaSelezionata;
   listaSelezionataVideo;
   lista;
+  lista2;
+  lista3;
   listaOrdinata;
   listaTasti;
   informazioniMM;
@@ -968,6 +970,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       localStorage.setItem('Tipologia', this.Tipologia);
       if (this.Tipologia === 'Immagini' || this.modalitaDoppia === true) {
         this.lista = JSON.parse(JSON.stringify(this.listaImmagini));
+        this.lista2 = JSON.parse(JSON.stringify(this.listaImmagini));
+        this.lista3 = JSON.parse(JSON.stringify(this.listaImmagini));
         this.listaOrdinata = JSON.parse(JSON.stringify(this.lista));
         this.listaOrdinata.sort((a, b) => { return a.NomeLista > b.NomeLista ? 1 : -1; });
 
@@ -1004,6 +1008,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.Tipologia !== 'Immagini' || this.modalitaDoppia === true) {
         if (this.modalitaDoppia === false) {
           this.lista = JSON.parse(JSON.stringify(this.listaVideo));
+          this.lista2 = JSON.parse(JSON.stringify(this.listaVideo));
+          this.lista3 = JSON.parse(JSON.stringify(this.listaVideo));
           this.listaOrdinata = JSON.parse(JSON.stringify(this.lista));
           this.listaOrdinata.sort((a, b) => { return a.NomeLista > b.NomeLista ? 1 : -1; });
 
@@ -4098,5 +4104,32 @@ export class AppComponent implements OnInit, AfterViewInit {
             }
         }
     });
+  }
+
+  entratoCampoStringa() {
+    console.log('Entrato campo stringa');
+    this.entratoInUnCampoTesto = true;
+  }
+
+  lasciatoCampoStringa(aggiorna) {
+      console.log('Uscito campo stringa');
+      this.entratoInUnCampoTesto = false;
+  }
+
+  filtroLista;
+
+  tastoPremuto(e) {
+      console.log(e, this.filtroLista);
+      setTimeout(() => {
+          const l = new Array();
+          this.lista3.forEach(element => {
+              // console.log(element.NomeLista, this.filtroLista);
+              if (element.NomeLista.toUpperCase().indexOf(this.filtroLista.toUpperCase().trim()) > -1) {
+                  l.push(element);
+              }
+          });
+          // console.log(this.filtroLista, l);
+          this.lista2 = l;
+      }, 10);
   }
 }

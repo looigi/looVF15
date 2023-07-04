@@ -11,7 +11,6 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class ExternalHttpClient {
-
   headers;
 
   constructor(private http: HttpClient) {
@@ -34,8 +33,8 @@ export class ExternalHttpClient {
       url += params.toString();
     }
     // console.log(url);
-    // t.utility.scriveDebug(t, 'Device: ' + t.deviceGirante);
-    // t.utility.scriveDebug(t, 'Chiamata: ' + url);
+    // console.error(t, 'Device: ' + t.deviceGirante);
+    // console.error(t, 'Chiamata: ' + url);
 
     if (t.deviceGirante === 'Android') {
       const postHeaders = new HttpHeaders(this.headers);
@@ -60,17 +59,17 @@ export class ExternalHttpClient {
         url, HTTPOptions
       )
       .map(data => { 
-        // t.utility.scriveDebug(t, 'Ritorno funzione Android: ' + url);
-        // t.utility.scriveDebug(t, data);
+        // console.error(t, 'Ritorno funzione Android: ' + url);
+        // console.error(t, data);
 
         return data; 
       })
       .pipe(
-        timeout(10000),
+        timeout(30000),
         catchError(e => {
           // do something on a timeout
-          t.utility.scriveDebug(t, 'Errore funzione get Android: ' + url);
-          t.utility.scriveDebug(t, JSON.stringify(e));
+          console.error(t, 'Errore funzione get Android: ' + url);
+          console.error(t, JSON.stringify(e));
 
           return of(null);
           // return e;
@@ -89,16 +88,16 @@ export class ExternalHttpClient {
 
       return this.http.get(url,  HTTPOptions)
         .map(data => { 
-          // t.utility.scriveDebug(t, 'Ritorno funzione WEB: ' + url);
-          // t.utility.scriveDebug(t, data);
+          // console.error(t, 'Ritorno funzione WEB: ' + url);
+          // console.error(t, data);
           return data; 
         })
         .pipe(
-        timeout(10000),
+        timeout(300000),
         catchError(e => {
           // do something on a timeout
-          t.utility.scriveDebug(t, 'Errore funzione get Android: ' + url);
-          t.utility.scriveDebug(t, JSON.stringify(e));
+          console.error(t, 'Errore funzione get Android: ' + url);
+          console.error(t, JSON.stringify(e));
 
           return of(null);
           // return e;
@@ -114,7 +113,7 @@ export class ExternalHttpClient {
         timeout(10000),
         catchError(e => {
           // do something on a timeout
-          t.utility.scriveDebug(this, 'TIMEOUT 2 funzione ' + url);
+          console.error(this, 'TIMEOUT 2 funzione ' + url);
 
           return of(null);
           // return e;
@@ -143,16 +142,16 @@ export class ExternalHttpClient {
 
     return this.http.post<any>(url, data, HTTPOptions)
       .map(data => { 
-        // t.utility.scriveDebug(t, 'Ritorno funzione WEB: ' + url);
-        // t.utility.scriveDebug(t, data);
+        // console.error(t, 'Ritorno funzione WEB: ' + url);
+        // console.error(t, data);
         return data; 
       })
       .pipe(
       // timeout(UtilityComponent.TimeOutConnessione),
       catchError(e => {
         // do something on a timeout
-        t.utility.scriveDebug(t, 'Errore funzione get Android: ' + url);
-        t.utility.scriveDebug(t, JSON.stringify(e));
+        console.error(t, 'Errore funzione get Android: ' + url);
+        console.error(t, JSON.stringify(e));
 
         return of(null);
         // return e;

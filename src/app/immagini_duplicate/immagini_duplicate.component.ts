@@ -55,6 +55,10 @@ import Utils from "../Utility.component";
     ciSonoSelezionate = false;
     quanteSelezionate = 0;
 
+    lista2;
+    lista3;
+    filtroLista;
+
     fattoSpostamento = false;
 
     dimensioneImmagine = 250;
@@ -311,6 +315,12 @@ import Utils from "../Utility.component";
         if (changes["mascheraVisibile"]) {
             if (changes["mascheraVisibile"].currentValue === true) {                            
                 this.leggeRicerche();
+            }
+        }
+        if (changes["lista"]) {
+            if (changes["lista"].currentValue) {
+                this.lista2 = changes["lista"].currentValue;
+                this.lista3 = changes["lista"].currentValue;
             }
         }
     }
@@ -1051,6 +1061,10 @@ import Utils from "../Utility.component";
                         break;
                     }
 
+                this.divToScroll.nativeElement.scrollTop = 30;
+                this.caricamentoInCorso = false;
+              } else {
+                alert('Errore nel rilevamento delle immagini');
                 this.divToScroll.nativeElement.scrollTop = 30;
                 this.caricamentoInCorso = false;
               }
@@ -2269,5 +2283,20 @@ import Utils from "../Utility.component";
 
     salvaSpostamentoTablet() {
         localStorage.setItem('spostamentoTablet', this.spostamentoTablet === true ? 'S' : 'N');
+    }
+
+    tastoPremuto(e) {
+        console.log(e, this.filtroLista);
+        setTimeout(() => {
+            const l = new Array();
+            this.lista3.forEach(element => {
+                // console.log(element.NomeLista, this.filtroLista);
+                if (element.NomeLista.toUpperCase().indexOf(this.filtroLista.toUpperCase().trim()) > -1) {
+                    l.push(element);
+                }
+            });
+            // console.log(this.filtroLista, l);
+            this.lista2 = l;
+        }, 10);
     }
   }

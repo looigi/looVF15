@@ -1177,6 +1177,15 @@ Gestione immagini duplicate -->
     </div>
   </div>
   <table style="width: 100%;">
+      <div style="width: 100%; ">
+        <div style="width: 30%; float: left;">
+            Filtro
+        </div>
+        <div style="width: 70%; float: left;">
+            <input type="text" [(ngModel)]="filtroLista" style="width: 100%;" (keyup)="tastoPremuto($event)" (blur)="entratoCampoStringa()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(true)">
+        </div>
+      </div>
+
       <tr style="border-bottom: 1px solid #999;">
         <td>
           Selezionata
@@ -1191,7 +1200,7 @@ Gestione immagini duplicate -->
           Categoria
         </th>
       </tr> -->
-      <tr *ngFor="let categorie of lista" [style.background-color]="categorie.RigaDispari == true ? '#efef92' : '#d1d164'">
+      <tr *ngFor="let categorie of lista2" [style.background-color]="categorie.RigaDispari == true ? '#efef92' : '#d1d164'">
         <td>
           <img *ngIf="categorie.RigaDispari == true" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
           <span  *ngIf="categorie.RigaDispari == false">{{categorie.NomeLista}}</span>
