@@ -110,12 +110,13 @@ export class ApiService {
     return ss;
   }
 
-  RitornaSuccessivoMultimedia(t, idTipologia, Categoria, Filtro, Random) {
+  RitornaSuccessivoMultimedia(t, idTipologia, Categoria, Filtro, Random, Attuale) {
     const url = this.urlWS + '/RitornaSuccessivoMultimediaNuovo?' +
       'idTipologia=' + idTipologia + '&' +
       'Categoria=' + Categoria + '&' +
       'Filtro=' + Filtro + '&' +
-      'Random=' + Random
+      'Random=' + Random+ '&' +
+      'Attuale=' + Attuale
       ;
     const ritorno = this.httpclient.get(t, url);
     return ritorno;

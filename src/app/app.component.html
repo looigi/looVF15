@@ -1176,16 +1176,16 @@ Gestione immagini duplicate -->
       <img src="assets/immagini/icons/icona_REFRESH.png" title="Ricarica categorie" class="immagini" style="width: 25px; height: 25px;" (click)="leggeCategorieImmagini()" />
     </div>
   </div>
-  <table style="width: 100%;">
-      <div style="width: 100%; ">
-        <div style="width: 30%; float: left;">
-            Filtro
-        </div>
-        <div style="width: 70%; float: left;">
-            <input type="text" [(ngModel)]="filtroLista" style="width: 100%;" (keyup)="tastoPremuto($event)" (blur)="entratoCampoStringa()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(true)">
-        </div>
-      </div>
+  <div style="width: 100%; ">
+    <div style="width: 30%; float: left;">
+        Filtro
+    </div>
+    <div style="width: 70%; float: left;">
+        <input type="text" [(ngModel)]="filtroLista" style="width: 100%;" (keyup)="tastoPremuto($event)" (blur)="entratoCampoStringa()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(true)">
+    </div>
+  </div>
 
+  <table style="width: 100%;">
       <tr style="border-bottom: 1px solid #999;">
         <td>
           Selezionata
@@ -1203,11 +1203,11 @@ Gestione immagini duplicate -->
       <tr *ngFor="let categorie of lista2" [style.background-color]="categorie.RigaDispari == true ? '#efef92' : '#d1d164'">
         <td>
           <img *ngIf="categorie.RigaDispari == true" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
-          <span  *ngIf="categorie.RigaDispari == false">{{categorie.NomeLista}}</span>
+          <span *ngIf="categorie.RigaDispari == false">{{categorie.NomeLista}}</span>
         </td>
         <td>
           <img *ngIf="categorie.RigaDispari == false" src="assets/immagini/icons/icona_SALVA.png" title="Salva" class="immagini" style="width: 35px; height: 35px;" (click)="SpostaMultimediaAdAltraCategoriaTablet(categorie)" />
-          <span  *ngIf="categorie.RigaDispari == true">{{categorie.NomeLista}}</span>
+          <span *ngIf="categorie.RigaDispari == true">{{categorie.NomeLista}}</span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #999;">

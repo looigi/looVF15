@@ -28,6 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   EseguiSoloTest = true;
   questo = this;
+  AttualeMultimedia = -1;
 
   title = 'looVF';
   QuanteImmaginiPerGriglia = 50;
@@ -284,6 +285,14 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
     }
 
+    const am = localStorage.getItem('AttualeMM');
+    if (am !== null) {
+      this.AttualeMultimedia = +am;
+    } else {
+      this.AttualeMultimedia = 10;
+    }
+    console.log('Attuale mm: ', am, this.AttualeMultimedia);
+
     this.Tipologia = localStorage.getItem('Tipologia');
     this.FiltroImmagini = localStorage.getItem('FiltroI');
     if (this.FiltroImmagini === null) { this.FiltroImmagini = ''; }
@@ -352,6 +361,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.caricamentoTipologie();
 
+    // 1532532873829
+    
     setTimeout(() => {
       const idI = localStorage.getItem('idCategoriaAttualeI');
       this.idCategoriaAttualeI = +idI;
@@ -376,23 +387,39 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.controllaSeStaEseguendoRefresh();
 
-      this.leggeCategorieVideo();
-      this.leggeCategorieImmagini();
+      this.inizio();
+    }, error => {
+      alert('Lettura file JSON. ERRORE: ' + JSON.stringify(error._body));
+    });
+  }
 
-      this.getPercorsoThumb().subscribe(data => {
-        this.pathThumb = data; // ._body;
+  inizio() {
+    this.leggeCategorieVideo();
+  }
 
-        const a = this.pathThumb.indexOf('CartelleCondivise');
-        this.pathThumb = this.pathThumb.substring(a + 17, this.pathThumb.length);
-        this.pathThumb = this.pathCC + '/' + this.pathThumb;
-        // // console.log(this.pathThumb);
-      }, error => {
-        alert('Lettura percorso Thumb. ERRORE: ' + JSON.stringify(error._body));
-      });
+  prosegueInizio1() {
+    this.leggeCategorieImmagini();
+  }
+
+  prosegueInizio2() {
+    this.getPercorsoThumb().subscribe(data => {
+      this.pathThumb = data; // ._body;
+
+      const a = this.pathThumb.indexOf('CartelleCondivise');
+      this.pathThumb = this.pathThumb.substring(a + 17, this.pathThumb.length);
+      this.pathThumb = this.pathCC + '/' + this.pathThumb;
+      // // console.log(this.pathThumb);
 
       let q = 0;
       const t = setInterval(() => {
-        if (this.listaImmagini  && this.listaVideo && this.urlWS && (this.listaSelezionata || this.listaSelezionataVideo)) {
+        console.log('Tempo: ' + q + '/5');
+        console.log('Lista Immagini: ', this.listaImmagini);
+        console.log('Lista Video: ', this.listaVideo);
+        console.log('Url WS: ', this.urlWS);
+        console.log('Lista Selezionata Immagini: ', this.listaSelezionata);
+        console.log('Lista Selezionata Video: ', this.listaSelezionataVideo);
+
+        if (this.listaImmagini  && this.listaVideo && this.urlWS) { // && (this.listaSelezionata || this.listaSelezionataVideo)) {
           this.caricamentoInCorsoI = false;
           this.caricamentoInCorsoV = false;
 
@@ -541,7 +568,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       }, 1000);
     }, error => {
-      alert('Lettura file JSON. ERRORE: ' + JSON.stringify(error._body));
+      alert('Lettura percorso Thumb. ERRORE: ' + JSON.stringify(error._body));
     });
   }
 
@@ -623,6 +650,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       // console.log(this.listaVideo);
 
       this.selezionaUltimaLista();
+
+      this.prosegueInizio1();
     }, error => {
       alert('Letta lista video. ERRORE: ' + JSON.stringify(error._body));
     });
@@ -715,6 +744,8 @@ export class AppComponent implements OnInit, AfterViewInit {
           console.log(this.listaAppoggioPerComponenti);
 
           this.selezionaUltimaLista();
+
+          this.prosegueInizio2();
         } else {
           alert(data);
         }
@@ -827,11 +858,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             
             if (!c[3]) { c[3] = 'S'; }
 
-            // console.log('Controllo su refresh', c);
+            console.log('Controllo su refresh', c);
 
             if (c[0].indexOf('NON ') === -1) {
-              this.refreshInCorso = true;
-              this.impostaLetturaRighe();
+              // this.refreshInCorso = true;
+              // this.impostaLetturaRighe();
             }
 
             if (c[1] === 'S' && c[3] === 'N') {
@@ -970,8 +1001,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       localStorage.setItem('Tipologia', this.Tipologia);
       if (this.Tipologia === 'Immagini' || this.modalitaDoppia === true) {
         this.lista = JSON.parse(JSON.stringify(this.listaImmagini));
-        this.lista2 = JSON.parse(JSON.stringify(this.listaImmagini));
-        this.lista3 = JSON.parse(JSON.stringify(this.listaImmagini));
         this.listaOrdinata = JSON.parse(JSON.stringify(this.lista));
         this.listaOrdinata.sort((a, b) => { return a.NomeLista > b.NomeLista ? 1 : -1; });
 
@@ -988,7 +1017,9 @@ export class AppComponent implements OnInit, AfterViewInit {
           element['RigaDispari'] = primo;
           primo = !primo;
         });
-        // console.log(this.lista);
+        this.lista2 = JSON.parse(JSON.stringify(this.lista));
+        this.lista3 = JSON.parse(JSON.stringify(this.lista));
+      // console.log(this.lista);
 
         this.listaSelezionata = localStorage.getItem('ListaSelezionataI');
 
@@ -1008,8 +1039,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.Tipologia !== 'Immagini' || this.modalitaDoppia === true) {
         if (this.modalitaDoppia === false) {
           this.lista = JSON.parse(JSON.stringify(this.listaVideo));
-          this.lista2 = JSON.parse(JSON.stringify(this.listaVideo));
-          this.lista3 = JSON.parse(JSON.stringify(this.listaVideo));
           this.listaOrdinata = JSON.parse(JSON.stringify(this.lista));
           this.listaOrdinata.sort((a, b) => { return a.NomeLista > b.NomeLista ? 1 : -1; });
 
@@ -1026,6 +1055,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             element['RigaDispari'] = primo;
             primo = !primo;
           });
+          this.lista2 = JSON.parse(JSON.stringify(this.lista));
+          this.lista3 = JSON.parse(JSON.stringify(this.lista));
   
           this.listaSelezionata = localStorage.getItem('ListaSelezionataV');
         // } else {
@@ -1281,12 +1312,19 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.caricamentoInCorsoV = true;
       Random = this.modalitaRandomV === true ? 'S' : 'N';
     }
+    const am = localStorage.getItem('AttualeMM');
+    if (am !== null) {
+      this.AttualeMultimedia = +am;
+    } else {
+      this.AttualeMultimedia = 10;
+    }
+    console.log('Attuale mm: ', am, this.AttualeMultimedia);
 
     // this.pathImmagine = 'assets/immagini/icons/please_wait.gif';
 
     // console.log('Carica multimedia', idTipologia, listaSelezionata, filtro, Random);
     this.staCaricando = true;
-    this.apiService.RitornaSuccessivoMultimedia(this, idTipologia, listaSelezionata, filtro, Random)
+    this.apiService.RitornaSuccessivoMultimedia(this, idTipologia, listaSelezionata, filtro, Random, this.AttualeMultimedia)
     .map(response => response)
       .subscribe(
         data => {
@@ -1350,10 +1388,19 @@ export class AppComponent implements OnInit, AfterViewInit {
   prendeMultiMediaDaID(idTipologia, id) {
     const i = id.split(';');
     const idMultimedia = i[0];
-    const idCategoria = i[1];
-    const categoria = i[3];
-    const Ultimo = i[4];
+    const idCategoria = i[3];
+    const categoria = i[1];
     const Inizio = i[5];
+    console.log('Dati per acquisizione id', i);
+    console.log('Attuale MM Su prende id: ', this.AttualeMultimedia);
+    if (!idCategoria) {
+      this.caricamentoInCorsoI = false;
+      this.caricamentoInCorsoV = false;
+      return;
+    }
+
+    this.AttualeMultimedia = +(i[4]);
+    localStorage.setItem('AttualeMM', this.AttualeMultimedia.toString());
     // const idTipologia = this.Tipologia === 'Immagini' ? 1 : 2;
 
     // alert('Avanti 6: ' + idMultimedia);
@@ -1387,10 +1434,10 @@ export class AppComponent implements OnInit, AfterViewInit {
           data => {
             if (data) {
               const data22 = this.apiService.prendeSoloDatiValidi(data);
-              // console.log(data2);
 
               let data2 = data22;
               let uguali = '';
+              console.log('Ritorno info immagine:', data2);
 
               if (data22.indexOf('|') > -1) {
                 const data222 = data22.split('|');
@@ -1443,7 +1490,7 @@ export class AppComponent implements OnInit, AfterViewInit {
               let filePresente = false;
               if (this.Tipologia === 'Immagini') {
                 const d = data2.split(';');
-                if (d[11] === 'S') { 
+                if (d[7] === 'S' || d[11] === 'S') {  // d[11]
                   filePresente = true; 
                 } else {
                   if (data2.indexOf('Nessun file') === -1) {
@@ -1455,6 +1502,7 @@ export class AppComponent implements OnInit, AfterViewInit {
               } else {
                 filePresente = true;
               }
+              console.log('File presente:', filePresente);
 
               if (data2.indexOf('ERROR') === -1 && data2.toUpperCase().indexOf('THUMBS.DB') === -1 && filePresente === true) { //
                 // §Yeah/20210901_173915.jpg;1388746;09/04/2021 18:56:46;3;34587;
@@ -1606,7 +1654,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                   console.log('Nessun file... Carico il prossimo')
                   setTimeout(() => {
                     this.avantiMM(idTipologia);
-                  }, 100);
+                  }, 10);
                 }
               }
             } else {
