@@ -1755,6 +1755,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     if (!path || path === '') {
+      console.log('Visualizza MM. Esco per path vuoto', path);
       return;
     }
 
