@@ -135,7 +135,6 @@
                         <input type="number" [(ngModel)]="caratteri" style="width: 100%;" (blur)="SalvaValoreCaratteri()" (focus)="entratoCampoStringa()" (focusout)="lasciatoCampoStringa(false)" >
                     </div>
                 </div>
-
             </div>
             <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: auto; border-top: 1px solid #999; padding: 5px; margin-top: 2px;">
                 <div style="width: calc(100% - 30px); float: left;">
@@ -212,6 +211,14 @@
                 </div>
 
             </div>
+            <div style="width: 100%; float: left; text-align: left; white-space: nowrap; height: auto; background-color: #c5c581; padding: 5px; margin-top: 2px;">
+                <div style="width: calc(100% - 30px); float: left; padding-top: 2px; height: 30px;">
+                    Tutti i metodi
+                </div>
+                <div style="width: 30px; float: left; text-align: right; margin-top: 5px;">
+                    <input type="checkbox" [checked]="tuttiIMetodi == true" (change)="cambiaRicercaPerTutti($event)" />
+                </div>
+            </div>
 
             <div style="clear: both;"></div>
 
@@ -234,7 +241,7 @@
                 </div>
             </div>
 
-            <div style="width: 100%; float: left; text-align: left; padding-left: 5px; white-space: nowrap; overflow: hidden;">
+            <div *ngIf="!tuttiIMetodi" style="width: 100%; float: left; text-align: left; padding-left: 5px; white-space: nowrap; overflow: hidden;">
                 <div style="width: calc(100% - 50px); float: left;">
                     Numero Righe<br />Ritornate
                 </div>
@@ -387,11 +394,11 @@
                                                             [style.width]="visualizzaInfo == true && rr.Eliminata == false && rr.Spostata == false && rr.SpostataACategoria == false ? '50%' : '100%'"
                                                             [style.padding-top.px]="((dimensioneImmagine - 22) - rr.dimeY) / 2"
                                                         >
+                                                            <!-- [style.width.px]="rr.dimeX" 
+                                                            [style.height.px]="rr.dimeY" -->
                                                             <img 
                                                                 [src]="rr.PathCompleto" 
-                                                                style="border: 1px solid #999;" 
-                                                                [style.width.px]="rr.dimeX" 
-                                                                [style.height.px]="rr.dimeY"
+                                                                style="border: 1px solid #999; width: 100%; height: 100%;" 
                                                                 (click)="visualizzaImmagine(rr)" 
                                                             />
                                                         </div>

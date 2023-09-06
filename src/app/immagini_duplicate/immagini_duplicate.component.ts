@@ -46,6 +46,7 @@ import Utils from "../Utility.component";
     ricercaPerStringa = false;
     ricercaPerPiccole = false;
     ricercaPer1280 = false;
+    tuttiIMetodi = false;
 
     QuanteImmagini: number;
     Inizio: number;
@@ -141,6 +142,11 @@ import Utils from "../Utility.component";
         const rp = localStorage.getItem('ricercaPerPunti');
         if (rp !== null) {
             this.ricercaPerPunti = rp === 'S' ? true : false;
+        }
+
+        const rt = localStorage.getItem('ricercaPerTutti');
+        if (rt !== null) {
+            this.tuttiIMetodi = rt === 'S' ? true : false;
         }
 
         const c = localStorage.getItem('Caratteri');
@@ -428,6 +434,21 @@ import Utils from "../Utility.component";
         } else {
             this.QuanteImmagini = 30;
         }
+    }
+
+    cambiaRicercaPerTutti(e) {
+        this.eliminaTuttiIFlag();
+            
+        setTimeout(() => {
+            this.tuttiIMetodi = true; // e.srcElement.checked;
+            localStorage.setItem('ricercaPerTutti', this.tuttiIMetodi === true ? 'S' : 'N');
+            this.QualeRicerca = 99;
+            localStorage.setItem('qualeRicerca', '99');
+
+            this.cambiaPagina();
+
+            // this.effettuaRicerca();
+        }, 100);      
     }
 
     cambiaRicercaMetodo1(e) {
@@ -730,6 +751,7 @@ import Utils from "../Utility.component";
         this.ricercaPerPiccole = false;
         this.ricercaPer1280 = false;
         this.ricercaPerEssenziale = false;
+        this.tuttiIMetodi = false;
 
         localStorage.setItem('ricercaPerMetodo1', 'N');
         localStorage.setItem('ricercaPerMetodo2', 'N');
@@ -742,6 +764,7 @@ import Utils from "../Utility.component";
         localStorage.setItem('ricercaPerPiccole', 'N');
         localStorage.setItem('ricercaPer1280', 'N');
         localStorage.setItem('ricercaPerEssenziale', 'N');
+        localStorage.setItem('ricercaPerTutti', 'N');
     }
 
     SalvaValoreDimensioni() {
@@ -835,7 +858,8 @@ import Utils from "../Utility.component";
             r1280,
             this.caratteri,
             this.Ordinamento,
-            rPuntiniHash
+            rPuntiniHash,
+            this.tuttiIMetodi ? 'S' : 'N'
         )
         .map(response => response)
           .subscribe(
@@ -846,6 +870,8 @@ import Utils from "../Utility.component";
 
                 const d = data2.split("|");
                 
+                const ricercaPerTutti = new Array();
+
                 const ricercaExifDesc = d[0];
                 const ricercaData = d[1];
                 const ricercaDimensioni = d[2];
@@ -869,97 +895,206 @@ import Utils from "../Utility.component";
                 let ricerca1280Dati = undefined;
                 let ricercaEssenzialeDati = undefined;
                 let ricercaHashDati = undefined;
-            
+
                 let ok = true;
 
                 if (ricercaEssenziale.indexOf('ERROR:') > -1 || ricercaEssenziale.indexOf('MDB:') > -1) {
-                    alert(ricercaEssenziale);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Essenziale: ' + ricercaEssenziale);
+                        ok = false;
+                    }
                 }
                 if (ricercaExifDesc.indexOf('ERROR:') > -1 || ricercaExifDesc.indexOf('MDB:') > -1) {
-                    alert(ricercaExifDesc);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Exif Desc: ' + ricercaExifDesc);
+                        ok = false;
+                    }
                 }
                 if (ricerca1280.indexOf('ERROR:') > -1 || ricerca1280.indexOf('MDB:') > -1) {
-                    alert(ricerca1280);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('1280: ' + ricerca1280);
+                        ok = false;
+                    }
                 }
                 if (ricercaExifComm.indexOf('ERROR:') > -1 || ricercaExifComm.indexOf('MDB:') > -1) {
-                    alert(ricercaExifComm);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Exif Comm: ' + ricercaExifComm);
+                        ok = false;
+                    }
                 }
                 if (ricercaData.indexOf('ERROR:') > -1 || ricercaData.indexOf('MDB:') > -1) {
-                    alert(ricercaData);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Data: ' + ricercaData);
+                        ok = false;
+                    }
                 }
                 if (ricercaDimensioni.indexOf('ERROR:') > -1 || ricercaDimensioni.indexOf('MDB:') > -1) {
-                    alert(ricercaDimensioni);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Dimensioni: ' + ricercaDimensioni);
+                        ok = false;
+                    }
                 }
                 if (ricercaPunti.indexOf('ERROR:') > -1 || ricercaPunti.indexOf('MDB:') > -1) {
-                    alert(ricercaPunti);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Punti: ' + ricercaPunti);
+                        ok = false;
+                    } else {
+                        ok = true;
+                    }
                 }
                 if (ricercaNomeUguale.indexOf('ERROR:') > -1 || ricercaNomeUguale.indexOf('MDB:') > -1) {
-                    alert(ricercaNomeUguale);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Nome Uguale: ' + ricercaNomeUguale);
+                        ok = false;
+                    }
                 }
                 if (ricercaPeso.indexOf('ERROR:') > -1 || ricercaPeso.indexOf('MDB:') > -1) {
-                    alert(ricercaPeso);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Peso: ' + ricercaPeso);
+                        ok = false;
+                    }
                 }
                 if (ricercaStringa.indexOf('ERROR:') > -1 || ricercaStringa.indexOf('MDB:') > -1) {
-                    alert(ricercaStringa);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Stringa: ' + ricercaStringa);
+                        ok = false;
+                    }
                 }
                 if (ricercaHash.indexOf('ERROR:') > -1 || ricercaHash.indexOf('MDB:') > -1) {
-                    alert(ricercaHash);
-                    ok = false;
+                    if (!this.tuttiIMetodi) {
+                        alert('Hash: ' + ricercaHash);
+                        ok = false;
+                    }
                 }
 
                 if (ok) {
-                    if (ricercaEssenziale.indexOf(';') > -1) {
-                        ricercaEssenzialeDati = this.scannaArray(ricercaEssenziale, '16;5;6');
-                        // console.log(this.ricercaHash);
-                    } else {
-                        ricercaEssenzialeDati = undefined;
+                    if (!this.tuttiIMetodi) {
+                        if (ricercaEssenziale.indexOf(';') > -1) {
+                            ricercaEssenzialeDati = this.scannaArray(ricercaEssenziale, '16;5;6');
+                            // console.log(this.ricercaHash);
+                        } else {
+                            ricercaEssenzialeDati = undefined;
+                        }
+
+                        if (ricercaExifDesc.indexOf(';') > -1) {
+                            ricercaExifDescDati = this.scannaArray(ricercaExifDesc, '19');
+                            // console.log(this.ricercaHash);
+                        } else {
+                            ricercaExifDescDati = undefined;
+                        }
+
+                        if (ricercaExifComm.indexOf(';') > -1) {
+                            ricercaExifCommDati = this.scannaArray(ricercaExifComm, '20');
+                            // console.log(this.ricercaHash);
+                        } else {
+                            ricercaExifCommDati = undefined;
+                        }
+
+                        if (ricerca1280.indexOf(';') > -1) {
+                            // console.log(ricerca1280);
+                            ricerca1280Dati = this.scannaArray(ricerca1280, '18');
+                            // console.log(ricerca1280Dati);
+                        } else {
+                            ricerca1280Dati = undefined;
+                        }
+
+                        if (ricercaData.indexOf(';') > -1) {
+                            ricercaDataDati = this.scannaArray(ricercaData, '7');
+                        } else {
+                            ricercaDataDati = undefined;
+                        }
+
+                        if (ricercaDimensioni.indexOf(';') > -1) {
+                            ricercaDimensioniDati = this.scannaArray(ricercaDimensioni, '5;6');
+                        } else {
+                            ricercaDimensioniDati = undefined;
+                        }
+
+                        if (ricercaPunti.indexOf(';') > -1) {
+                            let t = '';
+                            if (this.ricercaPerPuntiCornice === true) {
+                                t += '9;';
+                            }
+                            if (this.ricercaPerPuntiCorpo === true) {
+                                t += '4;';
+                            }
+                            if (this.ricercaPerPuntiDiagonale === true) {
+                                t += '8;';
+                            }
+                            if (this.ricercaPerNegativo === true) {
+                                t += '3;';
+                            }
+                            if (this.ricercaPerHash === true) {
+                                t += '18;';
+                            }
+                            if (this.ricercaPerEssenziale === true) {
+                                t += '17;';
+                            }
+                            ricercaPuntiniDati = this.scannaArray(ricercaPunti, t); // ;4
+                            // console.log(this.ricercaPuntini);
+                        } else {
+                            ricercaPuntiniDati = undefined;
+                        }
+
+                        if (ricercaNomeUguale.indexOf(';') > -1) {
+                            ricercaNomeUgualeDati = this.scannaArray(ricercaNomeUguale, '15');
+                            // console.log(this.ricercaPuntini);
+                        } else {
+                            ricercaNomeUgualeDati = undefined;
+                        }
+
+                        if (ricercaPeso.indexOf(';') > -1) {
+                            ricercaPesoDati = this.scannaArray(ricercaPeso, '16');
+                            // console.log(this.ricercaPuntini);
+                        } else {
+                            ricercaPesoDati = undefined;
+                        }
+
+                        if (ricercaStringa.indexOf(';') > -1) {
+                            ricercaStringaDati = this.scannaArray(ricercaStringa, '11;10');
+                            // console.log(this.ricercaPuntini);
+                        } else {
+                            ricercaStringaDati = undefined;
+                            if (ricercaStringa.indexOf('ERROR') > -1) {
+                                alert(ricercaStringa);
+                            }
+                        }
+
+                        if (ricercaHash.indexOf(';') > -1) {
+                            ricercaHashDati = this.scannaArray(ricercaHash, '21');
+                            // console.log(this.ricercaHash);
+                        } else {
+                            ricercaHashDati = undefined;
+                        }
                     }
 
-                    if (ricercaExifDesc.indexOf(';') > -1) {
-                        ricercaExifDescDati = this.scannaArray(ricercaExifDesc, '19');
-                        // console.log(this.ricercaHash);
-                    } else {
-                        ricercaExifDescDati = undefined;
-                    }
+                    if (this.tuttiIMetodi) {
+                        let dati;
 
-                    if (ricercaExifComm.indexOf(';') > -1) {
-                        ricercaExifCommDati = this.scannaArray(ricercaExifComm, '20');
-                        // console.log(this.ricercaHash);
-                    } else {
-                        ricercaExifCommDati = undefined;
-                    }
-
-                    if (ricerca1280.indexOf(';') > -1) {
-                        // console.log(ricerca1280);
-                        ricerca1280Dati = this.scannaArray(ricerca1280, '18');
-                        // console.log(ricerca1280Dati);
-                    } else {
-                        ricerca1280Dati = undefined;
-                    }
-
-                    if (ricercaData.indexOf(';') > -1) {
-                        ricercaDataDati = this.scannaArray(ricercaData, '7');
-                    } else {
-                        ricercaDataDati = undefined;
-                    }
-
-                    if (ricercaDimensioni.indexOf(';') > -1) {
-                        ricercaDimensioniDati = this.scannaArray(ricercaDimensioni, '5;6');
-                    } else {
-                        ricercaDimensioniDati = undefined;
-                    }
-
-                    if (ricercaPunti.indexOf(';') > -1) {
+                        dati = this.scannaArray(ricercaEssenziale, '16;5;6');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaExifDesc, '19');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaExifComm, '20');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricerca1280, '18');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaData, '7');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaDimensioni, '5;6');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
                         let t = '';
                         if (this.ricercaPerPuntiCornice === true) {
                             t += '9;';
@@ -979,43 +1114,29 @@ import Utils from "../Utility.component";
                         if (this.ricercaPerEssenziale === true) {
                             t += '17;';
                         }
-                        ricercaPuntiniDati = this.scannaArray(ricercaPunti, t); // ;4
-                        // console.log(this.ricercaPuntini);
-                    } else {
-                        ricercaPuntiniDati = undefined;
-                    }
+                        dati = this.scannaArray(ricercaPunti, t); // ;4
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaNomeUguale, '15');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaPeso, '16');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
+                        dati = this.scannaArray(ricercaHash, '21');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
 
-                    if (ricercaNomeUguale.indexOf(';') > -1) {
-                        ricercaNomeUgualeDati = this.scannaArray(ricercaNomeUguale, '15');
-                        // console.log(this.ricercaPuntini);
-                    } else {
-                        ricercaNomeUgualeDati = undefined;
-                    }
-
-                    if (ricercaPeso.indexOf(';') > -1) {
-                        ricercaPesoDati = this.scannaArray(ricercaPeso, '16');
-                        // console.log(this.ricercaPuntini);
-                    } else {
-                        ricercaPesoDati = undefined;
-                    }
-
-                    if (ricercaStringa.indexOf(';') > -1) {
-                        ricercaStringaDati = this.scannaArray(ricercaStringa, '11;10');
-                        // console.log(this.ricercaPuntini);
-                    } else {
-                        ricercaStringaDati = undefined;
-                        if (ricercaStringa.indexOf('ERROR') > -1) {
-                            alert(ricercaStringa);
-                        }
-                    }
-
-                    if (ricercaHash.indexOf(';') > -1) {
-                        ricercaHashDati = this.scannaArray(ricercaHash, '21');
+                        dati = this.scannaArray(ricercaPunti, '9;4;8;3;18;17;');
+                        dati.forEach(element => {
+                            ricercaPerTutti.push(element);
+                        });
                         // console.log(this.ricercaHash);
-                    } else {
-                        ricercaHashDati = undefined;
                     }
-
                 }
 
                 switch(this.QualeRicerca) {
@@ -1058,6 +1179,11 @@ import Utils from "../Utility.component";
                     case 10:
                         this.ricercaImpostata = ricercaEssenzialeDati;
                         this.nomeRicerca = 'ESSENZIALI';
+                        break;
+                    case 99:
+                        // console.log(ricercaPerTutti);
+                        this.ricercaImpostata = ricercaPerTutti;
+                        this.nomeRicerca = 'TUTTI I METODI';
                         break;
                     }
 
@@ -1118,7 +1244,15 @@ import Utils from "../Utility.component";
                         if (accendeSpegne === true) {
                             this.caricamentoInCorso = false;
                         }
-                        i.Eliminata = true;
+                        // i.Eliminata = true;
+                        console.log('Elimino immagine', this.ricercaImpostata, i.idMultimedia)
+                        this.ricercaImpostata.forEach(element => {
+                            element.Values.forEach(element2 => {
+                                if (element2.idMultimedia === i.idMultimedia) {
+                                    element2.Eliminata = true;
+                                }
+                            });
+                        });
                         this.righeTotali--;
                         this.fattoSpostamento = true;
                     }
@@ -1184,14 +1318,16 @@ import Utils from "../Utility.component";
                         // const n = rr[10].split('/');
                         // const NomeFile = n[(n.length - 1)];
                         // const Cartella = rr[10].replace(NomeFile, '');
-                        let pathImm = 'assets/immagini/icons/please_wait.gif';
-                        if (this.visualizzaThumb === false) {
-                            pathImm = 'assets/immagini/icons/No-image-found.jpg';
-                        }
 
                         const n = (rr[11] + rr[10]).split('/');
                         const NomeFile = n[(n.length - 1)];
-                        const Cartella = (rr[11] + rr[10]).replace(NomeFile, '');
+                        let Cartella = (rr[11] + '/' + rr[10]).replace(NomeFile, '');
+                        Cartella = Cartella.replace('//', '/');
+
+                        let pathImm = p; // 'assets/immagini/icons/please_wait.gif';
+                        if (this.visualizzaThumb === false) {
+                            pathImm = 'assets/immagini/icons/No-image-found.jpg';
+                        }
 
                         let NomeFileCorto = NomeFile;
                         if (NomeFileCorto.length > 25) {
@@ -1249,7 +1385,7 @@ import Utils from "../Utility.component";
                         }
 
                         let codice = '';
-                        if (this.QualeRicerca !== 7) {
+                        if (this.QualeRicerca !== 7 && this.QualeRicerca !== 99) {
                             // console.log('Campo di ricerca: ', QualeCampo);
                             if (QualeCampo.indexOf(';') === -1) {
                                 codice = rr[+QualeCampo];  
@@ -1263,7 +1399,42 @@ import Utils from "../Utility.component";
                                 codice = codice.substring(0, codice.length -3);
                             }
                         } else {
-                            codice = this.stringaRicerca;
+                            if (this.QualeRicerca === 99) {
+                                // codice = rr[0] + this.dimensioneImmagine;
+                                let QualeCampo2 = '';
+                                const cosa = rr[0];
+                                const cosa2 = new Array();
+                                for (let i = 0; i < cosa.length; i++) {
+                                    cosa2.push(cosa.substring(i, i + 1));
+                                }
+                                // console.log('Schema arrivato: ', cosa, cosa2);
+
+                                const q = QualeCampo.split(';');
+                                let q2 = 0;
+                                cosa2.forEach(element => {
+                                    if (element === 'S') {
+                                        QualeCampo2 += q[q2] + ';'
+                                    }
+                                    q2++;
+                                });
+                                // console.log('Codice preso: ', QualeCampo2);
+
+                                if (QualeCampo.indexOf(';') === -1) {
+                                    codice = rr[+QualeCampo];  
+                                } else {        
+                                    const cc = QualeCampo2.split(';');
+                                    cc.forEach(element2 => {
+                                        if (element2 && element2 !== '') {
+                                            codice += rr[+element2] + ' / ';  
+                                        }
+                                    });
+                                    codice = codice.substring(0, codice.length - 3);
+                                }
+
+                                // console.log('Campo di ricerca: ', QualeCampo2, codice);
+                             } else {
+                                codice = this.stringaRicerca;
+                            }
                         }
                         // console.log('Codice di ricerca: ', codice);
 
@@ -1313,6 +1484,7 @@ import Utils from "../Utility.component";
                                     ok = false;
                                 }
                             });
+                            ok = true;
                             if (ok) {
                                 // console.log('Aggiungo');
                                 rrrr[indice].Values.push(rrr);
@@ -1327,7 +1499,9 @@ import Utils from "../Utility.component";
             }
         });
 
-        this.aggiustaDimensioni(rrrr);
+        // console.log(rrrr);
+
+        // this.aggiustaDimensioni(rrrr);
 
         // console.log(rrrr);
         const rrrrr = new Array();
@@ -1342,8 +1516,10 @@ import Utils from "../Utility.component";
     }
 
     aggiustaDimensioni(rrrr) {                
+        // console.log('Aggiusto dimensioni', rrrr);
         rrrr.forEach(element => {
             element.Values.forEach(element2 => {
+                // console.log('Immagine da controllare: ', element2.ImmaginePerControllo);
                 if (this.visualizzaThumb === true) {
                     this.Utils.controllaImmagine(this.t, element2.ImmaginePerControllo).then((Ritorno) => {
                         let pathImm = '';
@@ -1439,15 +1615,51 @@ import Utils from "../Utility.component";
 
                         if (DatiElemento.Protetto) {
                             if (Cosa === 'S') {
-                                DatiElemento.PreferitoProt = true;
+                                // DatiElemento.PreferitoProt = true;
+
+                                console.log('Imposto preferito prot immagine', this.ricercaImpostata, DatiElemento.idMultimedia)
+                                this.ricercaImpostata.forEach(element => {
+                                    element.Values.forEach(element2 => {
+                                        if (element2.idMultimedia === DatiElemento.idMultimedia) {
+                                            element2.PreferitoProt = true;
+                                        }
+                                    });
+                                });        
                             } else {
-                                DatiElemento.PreferitoProt = false;
+                                // DatiElemento.PreferitoProt = false;
+
+                                console.log('Tolgo preferito prot immagine', this.ricercaImpostata, DatiElemento.idMultimedia)
+                                this.ricercaImpostata.forEach(element => {
+                                    element.Values.forEach(element2 => {
+                                        if (element2.idMultimedia === DatiElemento.idMultimedia) {
+                                            element2.PreferitoProt = false;
+                                        }
+                                    });
+                                });
                             }
                         } else {
                             if (Cosa === 'S') {
-                                DatiElemento.Preferito = true;
+                                // DatiElemento.Preferito = true;
+
+                                console.log('Imposto preferito immagine', this.ricercaImpostata, DatiElemento.idMultimedia)
+                                this.ricercaImpostata.forEach(element => {
+                                    element.Values.forEach(element2 => {
+                                        if (element2.idMultimedia === DatiElemento.idMultimedia) {
+                                            element2.Preferito = true;
+                                        }
+                                    });
+                                });
                             } else {
-                                DatiElemento.Preferito = false;
+                                // DatiElemento.Preferito = false;
+
+                                console.log('Tolgo preferito immagine', this.ricercaImpostata, DatiElemento.idMultimedia)
+                                this.ricercaImpostata.forEach(element => {
+                                    element.Values.forEach(element2 => {
+                                        if (element2.idMultimedia === DatiElemento.idMultimedia) {
+                                            element2.Preferito = false;
+                                        }
+                                    });
+                                });
                             }
                         }
                     } else {
@@ -1505,7 +1717,17 @@ import Utils from "../Utility.component";
                             this.caricamentoInCorso = false;
                         }
 
-                        i.Spostata = true;
+                        // i.Spostata = true;
+
+                        console.log('Sposta immagine', this.ricercaImpostata, i.idMultimedia)
+                        this.ricercaImpostata.forEach(element => {
+                            element.Values.forEach(element2 => {
+                                if (element2.idMultimedia === i.idMultimedia) {
+                                    element2.Spostata = true;
+                                }
+                            });
+                        });
+
                         this.righeTotali--;
                         this.fattoSpostamento = true;
                     }

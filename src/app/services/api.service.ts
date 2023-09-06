@@ -378,7 +378,7 @@ export class ApiService {
   TrovaImmaginiUguali(t, idCategoria, ricercaPerMetodo1, ricercaPerMetodo2, ricercaPerData, ricercaPerDimensioni, ricercaPerPunti, ricercaPerPuntiDiagonale,
                       ricercaPerPuntiCornice, ricercaPerPuntiCorpo, ricercaPerNomeUguale, ricercaPerPeso, ricercaPerStringa, 
                       stringaRicerca, QuanteImmagini, Inizio, AndOr, TutteLeCategorie, ricercaPerNegativo, ricercaPerEssenziale, ricercaPer1280,
-                      caratteri, Ordinamento, ricercaPerHash) {
+                      caratteri, Ordinamento, ricercaPerHash, TuttiIMetodi) {
     const url = this.urlWS + '/TrovaImmaginiUguali?' +
       'idCategoria=' + idCategoria + '&' +
       'ricercaPerMetodo1=' + ricercaPerMetodo1 + '&' +
@@ -402,7 +402,8 @@ export class ApiService {
       'ricercaPer1280=' + ricercaPer1280 + '&' +
       'Caratteri=' + caratteri + '&' +
       'Ordinamento=' + Ordinamento + '&' +
-      'ricercaPerHash=' + ricercaPerHash
+      'ricercaPerHash=' + ricercaPerHash + '&' +
+      'TuttiIMetodi=' + TuttiIMetodi
       ;
     const ritorno = this.httpclient.get(t, url);
     return ritorno;
